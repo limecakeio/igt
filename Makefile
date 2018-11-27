@@ -9,7 +9,7 @@ container_list=$(shell docker ps -aq | tr '\n' ' ')
 cmds=$(foreach container,$(container_list), docker rm -f $(container);)
 
 .PHONY: all
-all: dbms vms
+all: clean dbms vms
 
 .PHONY: dbms
 dbms: dbimages mysql mongo cassandra redis neo
@@ -53,5 +53,5 @@ vm:
 .PHONY: clean
 clean :
 	$(cmds)
-	rm -rf ~/data
-	rm -rf ~/neo4j
+	sudo rm -rf ~/data
+	sudo rm -rf ~/neo4j
