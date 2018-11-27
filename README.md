@@ -46,11 +46,11 @@ The following explains how to launch each obtained image individually:
   make neo # Launches neo4j Graph-based Store container on port 7474
   NOTE: neo4j is also accessible via a web-interface on localhost:7474
   ```
-* cassandra
+* Cassandra
   ```
   make cassandra # Launches Cassandra Column-based Store container on port 9042
   ```
-* cassandra
+* Ubuntu Virtual Machine
   ```
   make vm # Launches the ubuntu VM containing running instances all above mentioned DBMS containers on port 4000
   ```
