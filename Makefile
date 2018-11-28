@@ -53,5 +53,3 @@ vm:
 .PHONY: clean
 clean :
 	$(cmds)
-	sudo rm -rf ~/data
-	sudo rm -rf ~/neo4j
