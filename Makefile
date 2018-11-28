@@ -52,4 +52,5 @@ vm:
 #Removes all containers and resources associated with the IGT datastores
 .PHONY: clean
 clean :
+	sudo rm -f -r ~/data
 	$(cmds)
