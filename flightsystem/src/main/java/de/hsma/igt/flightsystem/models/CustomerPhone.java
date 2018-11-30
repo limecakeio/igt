@@ -25,13 +25,13 @@ public class CustomerPhone implements Serializable {
     @JoinColumn(name = "customerID")
 	private Customer customer;
 
-	@OneToMany
-	private PhoneType phoneType;
+//	@OneToMany
+//	private PhoneType phoneType;
 
 	public CustomerPhone(String contactNumber, Customer customer, PhoneType phoneType) {
 		this.contactNumber = contactNumber;
 		this.customer = customer;
-		this.phoneType = phoneType;
+//		this.phoneType = phoneType;
 	}
 	
 	public CustomerPhone() {}
@@ -52,11 +52,11 @@ public class CustomerPhone implements Serializable {
 		this.customer = customer;
 	}
 
-	public PhoneType getPhoneType() {
-		return phoneType;
-	}
+//	public PhoneType getPhoneType() {
+//		return phoneType;
+//	}
 
-	public void setPhoneType(PhoneType phoneType) {
-		this.phoneType = phoneType;
-	}
+//	public void setPhoneType(PhoneType phoneType) {
+//		this.phoneType = phoneType;
+//	}
 }

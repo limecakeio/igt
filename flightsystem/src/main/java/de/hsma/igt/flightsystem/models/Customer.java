@@ -35,16 +35,16 @@ public class Customer implements Serializable {
 	private CustomerStatus status;
 
 	// OneToMany unidirectional association
-	@OneToMany(mappedBy = "costumer", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<CustomerPhone> contactNumbers = new ArrayList<>();
+//	@OneToMany(mappedBy = "costumer", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<CustomerPhone> contactNumbers = new ArrayList<>();
+//
+//	public List<CustomerPhone> getContactNumbers() {
+//		return contactNumbers;
+//	}
 
-	public List<CustomerPhone> getContactNumbers() {
-		return contactNumbers;
-	}
-
-	public void setContactNumbers(List<CustomerPhone> contactNumbers) {
-		this.contactNumbers = contactNumbers;
-	}
+//	public void setContactNumbers(List<CustomerPhone> contactNumbers) {
+//		this.contactNumbers = contactNumbers;
+//	}
 
 	public Customer() {
 	}
