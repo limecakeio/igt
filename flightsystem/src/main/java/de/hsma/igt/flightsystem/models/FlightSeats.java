@@ -2,6 +2,8 @@ package de.hsma.igt.flightsystem.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,8 +35,8 @@ public class FlightSeats {
     @JoinColumn(name = "flightID")
 	private Flight flight;
 	
-	@ManyToOne()
-    @JoinColumn(name = "seatTypeID")
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "smallint")
 	private SeatType seatType;
 
 	public FlightSeats() {}
