@@ -48,8 +48,10 @@ neo:
 
 .PHONY: vm
 vm:
-	docker run --name $(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) 1527079/igt-ubuntu-vm
+	docker run --name $(igt_ubuntu_vm) -p $(ubuntu_vm_ports) 1527079/igt-ubuntu-vm
 #Removes all containers and resources associated with the IGT datastores
 .PHONY: clean
 clean :
 	$(cmds)
+	sudo rm -rf ~/data
+	sudo rm -rf ~/neo4j
