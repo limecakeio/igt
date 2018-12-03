@@ -23,7 +23,7 @@ public class Flightsegment implements Serializable {
 	private static final long serialVersionUID = 1088312445291365796L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer flightSegmentID;
 	@Column
 	private String flightName;

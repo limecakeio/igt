@@ -12,7 +12,7 @@ public class Flight implements Serializable {
 	private static final long serialVersionUID = -2213621625495102144L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer flightID;
 	
 	@Column
