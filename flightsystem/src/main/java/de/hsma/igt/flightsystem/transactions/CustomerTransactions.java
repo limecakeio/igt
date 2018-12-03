@@ -1,8 +1,16 @@
-package de.hsma.jens.de.hsma.jens.transactions;
+package de.hsma.igt.flightsystem.transactions;
 
-import de.hsma.jens.controllers.CustomerController;
-import de.hsma.jens.models.Customer;
-import de.hsma.jens.tools.Config;
+import de.hsma.igt.flightsystem.models.Airport;
+import de.hsma.igt.flightsystem.models.Customer;
+import de.hsma.igt.flightsystem.models.CustomerAddress;
+import de.hsma.igt.flightsystem.models.CustomerPhone;
+import de.hsma.igt.flightsystem.models.CustomerStatus;
+import de.hsma.igt.flightsystem.models.Flight;
+import de.hsma.igt.flightsystem.models.FlightSeats;
+import de.hsma.igt.flightsystem.models.Flightsegment;
+import de.hsma.igt.flightsystem.models.PhoneType;
+import de.hsma.igt.flightsystem.models.SeatType;
+import de.hsma.igt.flightsystem.tools.Config;
 
 import org.apache.log4j.Logger;
 
@@ -11,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Created by jenskohler on 06.12.17.
@@ -30,29 +38,23 @@ public class CustomerTransactions {
 
     public static void main(String[] args) {
     	System.out.println(Config.PERSISTENCE_UNIT_NAME);
-        Customer customer1 = new Customer();
+    	
+    	// CUSTOMER
+        Customer customer1 = new Customer("First", "Last", "Mail", new Date());
+        CustomerAddress address1 = new CustomerAddress("Hauptstraße", "1", "12345", "Teststate", "Germany");
+        CustomerStatus status1 = new CustomerStatus("WHITE_GOLD");
+        PhoneType phoneType1 = new PhoneType("HOME");
 
-        customer1.setC_ADDR_ID(1);
-        customer1.setC_BALANCE(11.11);
-        customer1.setC_BIRTHDATE(new Date());
-        customer1.setC_DATA("data_11");
-        customer1.setC_DISCOUNT(11.11);
-        customer1.setC_EMAIL("email_11");
-        customer1.setC_EXPIRATION(new Date());
-        customer1.setC_FNAME("fname_11");
-        customer1.setC_ID(100000000);
-        customer1.setC_LAST_LOGIN(new Date());
-        customer1.setC_LOGIN(new Date());
-        customer1.setC_PASSWD("password_11");
-        customer1.setC_LNAME("lname_11");
-        customer1.setC_PHONE("phone_11");
-        customer1.setC_SINCE(new Date());
-        customer1.setC_YTD_PMT(11.11);
-        customer1.setC_UNAME("uname_11");
-//
-//
-//        CustomerController customerController = new CustomerController();
-//        customerController.createCustomers();
+        //FLIGHT
+        Flight flight1 = new Flight();
+        flight1.setPlaneType("TESTPLANE");
+        SeatType seatType1 = new SeatType("Economy");
+        Flightsegment segment1 = new Flightsegment("RH213", 15000);
+        Airport airport1 = new Airport(7,"FRA", 123.4f, 23.7f);
+        Airport airport2 = new Airport(8,"BER", 180.3f, 41.2f);
+        
+        //CustomerController customerController = new CustomerController();
+        //customerController.createCustomers();
 
 
         try {
@@ -60,11 +62,48 @@ public class CustomerTransactions {
 
             logger.info("TA begins");
             EntityManager em = emf.createEntityManager();
-
+            	
 
             
             System.out.println("persist");
+            
+            //CUSTOMER
+            em.persist(address1);
+            customer1.setAddress(address1);
+            
+            em.persist(status1);
+            customer1.setStatus(status1);
+            
             em.persist(customer1);
+            
+            em.persist(phoneType1);
+            CustomerPhone phone1 = new CustomerPhone(customer1, "12313231", phoneType1);
+            em.persist(phone1);
+            
+            
+            
+            //FLIGHT
+            em.persist(airport1);
+            em.persist(airport2);
+            segment1.setDestination(airport1);
+            segment1.setOrigin(airport2);
+            
+            em.persist(segment1);
+            HashSet<Flightsegment> segmentSet = new HashSet<>();
+            segmentSet.add(segment1);
+             
+            flight1.setFlightsegments(segmentSet);
+            
+            HashSet<Customer> customerSet = new HashSet<>();
+            customerSet.add(customer1);
+            flight1.setCustomer(customerSet);
+           
+            em.persist(flight1);
+            
+            em.persist(seatType1);
+            
+            FlightSeats flightSeat = new FlightSeats(30, 150, flight1, seatType1);
+            em.persist(flightSeat);
             System.out.println("persist FINSH");
 
 

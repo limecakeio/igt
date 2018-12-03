@@ -1,15 +1,5 @@
 package de.hsma.igt.flightsystem.models;
 
-import java.util.Date;
-
-import org.junit.Test;
-
-import de.hsma.igt.flightsystem.models.Customer;
-import de.hsma.igt.flightsystem.models.CustomerAddress;
-import de.hsma.igt.flightsystem.models.CustomerStatus;
-
-import org.junit.Assert;
-
 public class FirstTests {
 
 //	@Test

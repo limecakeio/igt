@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -27,28 +28,22 @@ public class Customer implements Serializable {
 	@Column
 	private Date dateOfBirth;
 	// OneToOne bidirectional association
-	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne
 	private CustomerAddress address;
 
 	// ManyToOne unidirectional association
 	@ManyToOne
 	private CustomerStatus status;
 
-	// OneToMany unidirectional association
-//	@OneToMany(mappedBy = "costumer", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<CustomerPhone> contactNumbers = new ArrayList<>();
-//
-//	public List<CustomerPhone> getContactNumbers() {
-//		return contactNumbers;
-//	}
+	// OneToMany unidirectional association cascade = CascadeType.ALL, orphanRemoval = true
+    @OneToMany(mappedBy = "customer")
+	private Set<CustomerPhone> contactNumbers;
 
-//	public void setContactNumbers(List<CustomerPhone> contactNumbers) {
-//		this.contactNumbers = contactNumbers;
-//	}
-
+    @ManyToMany(mappedBy = "customer")
+	private Set<Flight> flights;
+    
 	public Customer() {
 	}
-
 	public Customer(String firstname, String lastname, String email, Date dateOfBirth) {
 		super();
 		this.firstname = firstname;
@@ -59,6 +54,10 @@ public class Customer implements Serializable {
 
 	public CustomerAddress getAddress() {
 		return address;
+	}
+
+	public Set<CustomerPhone> getContactNumbers() {
+		return contactNumbers;
 	}
 
 	public Integer getCustomerID() {
@@ -77,12 +76,24 @@ public class Customer implements Serializable {
 		return firstname;
 	}
 
+	public Set<Flight> getFlights() {
+		return flights;
+	}
+
 	public String getLastname() {
 		return lastname;
 	}
 
+	public CustomerStatus getStatus() {
+		return status;
+	}
+
 	public void setAddress(CustomerAddress address) {
 		this.address = address;
+	}
+
+	public void setContactNumbers(Set<CustomerPhone> contactNumbers) {
+		this.contactNumbers = contactNumbers;
 	}
 
 	public void setCustomerID(Integer customerID) {
@@ -101,14 +112,12 @@ public class Customer implements Serializable {
 		this.firstname = firstname;
 	}
 
+	public void setFlights(Set<Flight> flights) {
+		this.flights = flights;
+	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
-	public CustomerStatus getStatus() {
-		return status;
-	}
-
 	public void setStatus(CustomerStatus status) {
 		this.status = status;
 	}

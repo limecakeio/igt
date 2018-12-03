@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,11 +21,6 @@ public class CustomerAddress implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer addressID;
-
-	// OneToOne bidirectional association
-	@OneToOne
-    @MapsId
-    private Customer customer;
 	
 	@Column
 	private String streetname;
@@ -60,10 +53,6 @@ public class CustomerAddress implements Serializable {
 		return country;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
 	public String getPostcode() {
 		return postcode;
 	}
@@ -86,10 +75,6 @@ public class CustomerAddress implements Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 
 	public void setPostcode(String postcode) {
