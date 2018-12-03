@@ -36,7 +36,6 @@ public class FlightSeats {
 	private Flight flight;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "smallint")
 	private SeatType seatType;
 
 	public FlightSeats() {}

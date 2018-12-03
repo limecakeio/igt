@@ -31,9 +31,7 @@ public class Customer implements Serializable {
 	@OneToOne
 	private CustomerAddress address;
 
-	// ManyToOne unidirectional association
 	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "smallint")
 	private CustomerStatus status;
 
 	// OneToMany unidirectional association cascade = CascadeType.ALL, orphanRemoval = true
@@ -48,6 +46,7 @@ public class Customer implements Serializable {
 		this.lastname = lastname;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
+		this.status = CustomerStatus.NONE;																																																																																																																																																																																																																																																																																																																																					
 	}
 
 	public CustomerAddress getAddress() {

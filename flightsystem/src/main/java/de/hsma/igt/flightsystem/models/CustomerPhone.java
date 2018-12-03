@@ -34,7 +34,6 @@ public class CustomerPhone implements Serializable {
 	private Customer customer;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "smallint")
 	private PhoneType phoneType;
 
 	public CustomerPhone() {}
