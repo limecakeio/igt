@@ -38,9 +38,6 @@ public class Customer implements Serializable {
 	// OneToMany unidirectional association cascade = CascadeType.ALL, orphanRemoval = true
     @OneToMany(mappedBy = "customer")
 	private Set<CustomerPhone> contactNumbers;
-
-    @ManyToMany(mappedBy = "customer")
-	private Set<Flight> flights;
     
 	public Customer() {
 	}
@@ -76,10 +73,6 @@ public class Customer implements Serializable {
 		return firstname;
 	}
 
-	public Set<Flight> getFlights() {
-		return flights;
-	}
-
 	public String getLastname() {
 		return lastname;
 	}
@@ -112,12 +105,10 @@ public class Customer implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public void setFlights(Set<Flight> flights) {
-		this.flights = flights;
-	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
 	public void setStatus(CustomerStatus status) {
 		this.status = status;
 	}

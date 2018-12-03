@@ -86,18 +86,13 @@ public class CustomerTransactions {
             //FLIGHT
             em.persist(airport1);
             em.persist(airport2);
-            segment1.setDestination(airport1);
-            segment1.setOrigin(airport2);
             
             em.persist(segment1);
             HashSet<Flightsegment> segmentSet = new HashSet<>();
             segmentSet.add(segment1);
-             
-            flight1.setFlightsegments(segmentSet);
             
             HashSet<Customer> customerSet = new HashSet<>();
             customerSet.add(customer1);
-            flight1.setCustomer(customerSet);
            
             em.persist(flight1);
             
@@ -105,9 +100,7 @@ public class CustomerTransactions {
             
             FlightSeats flightSeat = new FlightSeats(30, 150, flight1, seatType1);
             em.persist(flightSeat);
-            System.out.println("persist FINSH");
-
-
+            System.out.println("persist FINSH");            
 
             System.out.println("flush");
             em.flush();
