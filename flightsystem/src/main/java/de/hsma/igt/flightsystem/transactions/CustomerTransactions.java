@@ -53,6 +53,7 @@ public class CustomerTransactions {
         Airport airport1 = new Airport(7,"FRA", 123.4f, 23.7f);
         Airport airport2 = new Airport(8,"BER", 180.3f, 41.2f);
         
+        
         //CustomerController customerController = new CustomerController();
         //customerController.createCustomers();
 
