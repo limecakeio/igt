@@ -33,12 +33,12 @@ public class CustomerStatus implements Serializable {
 		return customerStatusID;
 	}
 
-	public void setCustomerStatusID(Integer customerStatusID) {
-		this.customerStatusID = customerStatusID;
-	}
-
 	public String getCustomerStatusName() {
 		return customerStatusName;
+	}
+
+	public void setCustomerStatusID(Integer customerStatusID) {
+		this.customerStatusID = customerStatusID;
 	}
 
 	public void setCustomerStatusName(String customerStatusName) {

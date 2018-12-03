@@ -1,12 +1,14 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,41 +21,47 @@ public class CustomerPhone implements Serializable {
 	private static final long serialVersionUID = -900068554945708639L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer CustomerPhoneID;
+	
+	@Column
 	private String contactNumber;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
     @JoinColumn(name = "customerID")
 	private Customer customer;
-
-	@OneToMany
+	
+	
+	@ManyToOne()
+    @JoinColumn(name = "phoneTypeID")
 	private PhoneType phoneType;
 
-	public CustomerPhone(String contactNumber, Customer customer, PhoneType phoneType) {
-		this.contactNumber = contactNumber;
+	public CustomerPhone() {}
+	
+	public CustomerPhone(Customer customer, String contactNumber, PhoneType phoneType) {
 		this.customer = customer;
+		this.contactNumber = contactNumber;
 		this.phoneType = phoneType;
 	}
-	
-	public CustomerPhone() {}
 
 	public String getContactNumber() {
 		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
 	}
 
 	public Customer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public PhoneType getPhoneType() {
 		return phoneType;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public void setPhoneType(PhoneType phoneType) {

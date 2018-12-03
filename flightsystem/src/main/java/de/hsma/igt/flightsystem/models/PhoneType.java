@@ -21,26 +21,30 @@ public class PhoneType implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer phoneTypeID;
+	
 	@Column
 	private String phoneTypeName;
 	
 	public PhoneType() {}
+	
+	public PhoneType(String phoneTypeName) 
+	{
+		this.phoneTypeName = phoneTypeName;
+	}
 
 	public Integer getPhoneTypeID() {
 		return phoneTypeID;
-	}
-
-	public void setPhoneTypeID(Integer phoneTypeID) {
-		this.phoneTypeID = phoneTypeID;
 	}
 
 	public String getPhoneTypeName() {
 		return phoneTypeName;
 	}
 
+	public void setPhoneTypeID(Integer phoneTypeID) {
+		this.phoneTypeID = phoneTypeID;
+	}
+
 	public void setPhoneTypeName(String phoneTypeName) {
 		this.phoneTypeName = phoneTypeName;
 	}
-	
-	
 }
