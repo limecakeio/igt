@@ -16,9 +16,9 @@ import java.util.*;
 import static de.hsma.igt.flightsystem.tools.RandomGenerator.*;
 
 
-public class CustomerPopulator {
+public class CustomerPopulator implements Populator {
 
-    public static List<Customer> populateCustomerAsList(int numberOfCustomers) {
+    public List<Customer> populateAsList(int numberOfCustomers) {
         List<Customer> cList = new ArrayList<Customer>();
 
         String C_LNAME, C_FNAME;
