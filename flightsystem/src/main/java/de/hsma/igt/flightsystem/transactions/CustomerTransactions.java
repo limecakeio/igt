@@ -50,8 +50,8 @@ public class CustomerTransactions {
         flight1.setPlaneType("TESTPLANE");
         SeatType seatType1 = new SeatType("Economy");
         Flightsegment segment1 = new Flightsegment("RH213", 15000);
-        Airport airport1 = new Airport(7,"FRA", 123.4f, 23.7f);
-        Airport airport2 = new Airport(8,"BER", 180.3f, 41.2f);
+        Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
+        Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
         
         
         //CustomerController customerController = new CustomerController();

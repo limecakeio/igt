@@ -19,7 +19,7 @@ public class Airport implements Serializable {
 	private static final long serialVersionUID = -5599306893398434798L;
 
 	@Id
-	private Integer iataCode;
+	private String iataCode;
 	@Column
 	private String name;
 	@Column
@@ -34,7 +34,7 @@ public class Airport implements Serializable {
 	
 	public Airport() {}
 	 
-	public Airport(Integer iataCode, String name, Float longitude, Float latitude) {
+	public Airport(String iataCode, String name, Float longitude, Float latitude) {
 		super();
 		this.iataCode = iataCode;
 		this.name = name;
@@ -46,7 +46,7 @@ public class Airport implements Serializable {
 		return arrivingFlightSegments;
 	}
 
-	public Integer getIataCode() {
+	public String getIataCode() {
 		return iataCode;
 	}
 
@@ -70,7 +70,7 @@ public class Airport implements Serializable {
 		this.arrivingFlightSegments = arrivingFlightSegments;
 	}
 
-	public void setIataCode(Integer iataCode) {
+	public void setIataCode(String iataCode) {
 		this.iataCode = iataCode;
 	}
 
