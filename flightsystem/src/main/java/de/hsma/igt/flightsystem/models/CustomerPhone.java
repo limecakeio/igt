@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,9 +33,8 @@ public class CustomerPhone implements Serializable {
     @JoinColumn(name = "customerID")
 	private Customer customer;
 	
-	
-	@ManyToOne()
-    @JoinColumn(name = "phoneTypeID")
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "smallint")
 	private PhoneType phoneType;
 
 	public CustomerPhone() {}

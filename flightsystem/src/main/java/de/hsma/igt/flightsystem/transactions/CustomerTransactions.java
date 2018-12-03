@@ -42,13 +42,13 @@ public class CustomerTransactions {
     	// CUSTOMER
         Customer customer1 = new Customer("First", "Last", "Mail", new Date());
         CustomerAddress address1 = new CustomerAddress("Hauptstraße", "1", "12345", "Teststate", "Germany");
-        CustomerStatus status1 = new CustomerStatus("WHITE_GOLD");
-        PhoneType phoneType1 = new PhoneType("HOME");
+        CustomerStatus status1 = CustomerStatus.WHITE_GOLD;
+        PhoneType phoneType1 = PhoneType.HOME_PHONE;
 
         //FLIGHT
         Flight flight1 = new Flight();
         flight1.setPlaneType("TESTPLANE");
-        SeatType seatType1 = new SeatType("Economy");
+        SeatType seatType1 = SeatType.BUSINESS;
         Flightsegment segment1 = new Flightsegment("RH213", 15000);
         Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
         Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
