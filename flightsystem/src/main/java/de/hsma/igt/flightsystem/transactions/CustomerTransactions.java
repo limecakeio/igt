@@ -42,13 +42,10 @@ public class CustomerTransactions {
     	// CUSTOMER
         Customer customer1 = new Customer("First", "Last", "Mail", new Date());
         CustomerAddress address1 = new CustomerAddress("Hauptstraße", "1", "12345", "Teststate", "Germany");
-        CustomerStatus status1 = CustomerStatus.WHITE_GOLD;
-        PhoneType phoneType1 = PhoneType.HOME_PHONE;
 
         //FLIGHT
         Flight flight1 = new Flight();
         flight1.setPlaneType("TESTPLANE");
-        SeatType seatType1 = SeatType.BUSINESS;
         Flightsegment segment1 = new Flightsegment("RH213", 15000);
         Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
         Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
@@ -72,13 +69,11 @@ public class CustomerTransactions {
             em.persist(address1);
             customer1.setAddress(address1);
             
-            em.persist(status1);
-            customer1.setStatus(status1);
+            customer1.setStatus(CustomerStatus.GOLD);
             
             em.persist(customer1);
             
-            em.persist(phoneType1);
-            CustomerPhone phone1 = new CustomerPhone(customer1, "12313231", phoneType1);
+            CustomerPhone phone1 = new CustomerPhone(customer1, "12313231", PhoneType.HOME_PHONE);
             em.persist(phone1);
             
             
@@ -96,9 +91,7 @@ public class CustomerTransactions {
            
             em.persist(flight1);
             
-            em.persist(seatType1);
-            
-            FlightSeats flightSeat = new FlightSeats(30, 150, flight1, seatType1);
+            FlightSeats flightSeat = new FlightSeats(30, 150, flight1, SeatType.BUSINESS);
             em.persist(flightSeat);
             System.out.println("persist FINSH");            
 
