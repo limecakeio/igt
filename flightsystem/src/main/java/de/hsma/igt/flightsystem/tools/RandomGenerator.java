@@ -6,7 +6,7 @@ public class RandomGenerator {
     private static Random rand = new Random();
 
 
-    private static String DigSyl(int D, int N) {
+    public static String DigSyl(int D, int N) {
         int i;
         String resultString = new String();
         String Dstr = Integer.toString(D);
@@ -43,7 +43,7 @@ public class RandomGenerator {
         return resultString;
     }
 
-    private static String getRandomAString(int length) {
+    public static String getRandomAString(int length) {
         String newstring = new String();
         int i;
         final char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
@@ -62,7 +62,7 @@ public class RandomGenerator {
     }
 
 
-    private static String getRandomAString(int min, int max) {
+    public static String getRandomAString(int min, int max) {
         String newstring = new String();
         int i;
         final char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
@@ -82,7 +82,7 @@ public class RandomGenerator {
         return newstring;
     }
 
-    private static int getRandomInt(int lower, int upper) {
+    public static int getRandomInt(int lower, int upper) {
 
         int num = (int) Math.floor(rand.nextDouble() * ((upper + 1) - lower));
         if (num + lower > upper || num + lower < lower) {
@@ -92,7 +92,7 @@ public class RandomGenerator {
         return num + lower;
     }
 
-    private static int getRandomNString(int num_digits) {
+    public static int getRandomNString(int num_digits) {
         int return_num = 0;
         for (int i = 0; i < num_digits; i++) {
             return_num += getRandomInt(0, 9) *
@@ -101,7 +101,7 @@ public class RandomGenerator {
         return return_num;
     }
 
-    private static int getRandomNString(int min, int max) {
+    public static int getRandomNString(int min, int max) {
         int strlen = (int) Math.floor(rand.nextDouble() * ((max - min) + 1)) + min;
         return getRandomNString(strlen);
     }
