@@ -13,7 +13,7 @@ import de.hsma.igt.flightsystem.tools.RandomGenerator;
 
 public class FlightPopulator {
 	
-	public static List<Flight> populateCustomerAsList(int numberOfCustomers) {
+	public static List<Flight> populateFlightsAsList(int numberOfCustomers) {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
