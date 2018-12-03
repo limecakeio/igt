@@ -26,11 +26,6 @@ public class Airport implements Serializable {
 	private Float longitude;
 	@Column
 	private Float latitude;
-	@OneToMany(mappedBy = "destination")
-	private Set<Flightsegment> arrivingFlightSegments;
-	
-	@OneToMany(mappedBy = "origin")
-	private Set<Flightsegment> leavingFlightSegments;
 	
 	public Airport() {}
 	 
@@ -42,20 +37,12 @@ public class Airport implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public Set<Flightsegment> getArrivingFlightSegments() {
-		return arrivingFlightSegments;
-	}
-
 	public String getIataCode() {
 		return iataCode;
 	}
 
 	public Float getLatitude() {
 		return latitude;
-	}
-
-	public Set<Flightsegment> getLeavingFlightSegments() {
-		return leavingFlightSegments;
 	}
 
 	public Float getLongitude() {
@@ -66,20 +53,12 @@ public class Airport implements Serializable {
 		return name;
 	}
 
-	public void setArrivingFlightSegments(Set<Flightsegment> arrivingFlightSegments) {
-		this.arrivingFlightSegments = arrivingFlightSegments;
-	}
-
 	public void setIataCode(String iataCode) {
 		this.iataCode = iataCode;
 	}
 
 	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
-	}
-
-	public void setLeavingFlightSegments(Set<Flightsegment> leavingFlightSegments) {
-		this.leavingFlightSegments = leavingFlightSegments;
 	}
 
 	public void setLongitude(Float longitude) {
