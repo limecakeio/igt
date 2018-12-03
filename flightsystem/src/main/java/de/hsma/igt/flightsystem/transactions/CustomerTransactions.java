@@ -1,6 +1,7 @@
 package de.hsma.igt.flightsystem.transactions;
 
 import de.hsma.igt.flightsystem.models.Airport;
+import de.hsma.igt.flightsystem.models.Booking;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerAddress;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
@@ -93,6 +94,7 @@ public class CustomerTransactions {
             
             FlightSeats flightSeat = new FlightSeats(30, 150, flight1, SeatType.BUSINESS);
             em.persist(flightSeat);
+            em.persist(new Booking(customer1, flight1));
             System.out.println("persist FINSH");            
 
             System.out.println("flush");
