@@ -1,21 +1,17 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "FLIGHTSEGMENT")
-public class Flightsegment implements Serializable {
+public class FlightSegment implements Serializable {
 
 	/**
 	 * 
@@ -24,22 +20,22 @@ public class Flightsegment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer flightSegmentID;
+	private int flightSegmentID;
 	@Column
 	private String flightName;
 	@Column
-	private Integer distanceInMiles;
+	private int distanceInMiles;
 	
-	private Flightsegment() {
+	private FlightSegment() {
 	}
 
-	public Flightsegment(String flightName, Integer distanceInMiles) {
+	public FlightSegment(String flightName, Integer distanceInMiles) {
 		super();
 		this.flightName = flightName;
 		this.distanceInMiles = distanceInMiles;
 	}
 
-	public Integer getDistanceInMiles() {
+	public int getDistanceInMiles() {
 		return distanceInMiles;
 	}
 
@@ -47,11 +43,11 @@ public class Flightsegment implements Serializable {
 		return flightName;
 	}
 	
-	public Integer getFlightSegmentID() {
+	public int getFlightSegmentID() {
 		return flightSegmentID;
 	}
 
-	public void setDistanceInMiles(Integer distanceInMiles) {
+	public void setDistanceInMiles(int distanceInMiles) {
 		this.distanceInMiles = distanceInMiles;
 	}
 
@@ -59,7 +55,7 @@ public class Flightsegment implements Serializable {
 		this.flightName = flightName;
 	}
 
-	public void setFlightSegmentID(Integer flightSegmentID) {
+	public void setFlightSegmentID(int flightSegmentID) {
 		this.flightSegmentID = flightSegmentID;
 	}
 }
