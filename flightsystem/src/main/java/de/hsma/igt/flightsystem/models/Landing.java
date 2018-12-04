@@ -27,7 +27,7 @@ public class Landing implements Serializable{
 
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")
-	private Flightsegment flightSegment;
+	private FlightSegment flightSegment;
 	
 	@ManyToOne()
     @JoinColumn(name = "iataCode")
@@ -36,7 +36,7 @@ public class Landing implements Serializable{
 	@Column
 	private Date time;
 	
-	public Landing(Flightsegment flightSegment, Airport airport, Date time) {
+	public Landing(FlightSegment flightSegment, Airport airport, Date time) {
 		super();
 		this.flightSegment = flightSegment;
 		this.airport = airport;
@@ -48,7 +48,7 @@ public class Landing implements Serializable{
 		return airport;
 	}
 
-	public Flightsegment getFlightSegment() {
+	public FlightSegment getFlightSegment() {
 		return flightSegment;
 	}
 
@@ -60,7 +60,7 @@ public class Landing implements Serializable{
 		this.airport = airport;
 	}
 
-	public void setFlightSegment(Flightsegment flightSegment) {
+	public void setFlightSegment(FlightSegment flightSegment) {
 		this.flightSegment = flightSegment;
 	}
 

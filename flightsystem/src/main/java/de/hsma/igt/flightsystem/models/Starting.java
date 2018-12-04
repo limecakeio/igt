@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "DEPARTURE")
 public class Starting implements Serializable{
 
-	public Starting(Flightsegment flightSegment, Airport airport, Date time) {
+	public Starting(FlightSegment flightSegment, Airport airport, Date time) {
 		super();
 		this.flightSegment = flightSegment;
 		this.airport = airport;
@@ -34,7 +34,7 @@ public class Starting implements Serializable{
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")
-	private Flightsegment flightSegment;
+	private FlightSegment flightSegment;
 	
 	@ManyToOne()
     @JoinColumn(name = "iataCode")
@@ -47,7 +47,7 @@ public class Starting implements Serializable{
 		return airport;
 	}
 
-	public Flightsegment getFlightSegment() {
+	public FlightSegment getFlightSegment() {
 		return flightSegment;
 	}
 
@@ -55,7 +55,7 @@ public class Starting implements Serializable{
 		this.airport = airport;
 	}
 
-	public void setFlightSegment(Flightsegment flightSegment) {
+	public void setFlightSegment(FlightSegment flightSegment) {
 		this.flightSegment = flightSegment;
 	}
 
