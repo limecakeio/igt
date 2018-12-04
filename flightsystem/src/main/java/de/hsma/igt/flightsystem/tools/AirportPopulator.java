@@ -8,6 +8,7 @@ public class AirportPopulator {
     private ArrayList<Airport> airports;
 
     public AirportPopulator() {
+        this.airports = new ArrayList<>();
         this.initAirports();
     }
 

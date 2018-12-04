@@ -12,9 +12,8 @@ import javax.transaction.*;
 import java.util.Date;
 import java.util.HashSet;
 
-/**
- * Created by jenskohler on 06.12.17.
- */
+
+
 public class CustomerTransactions {
     //accessing JBoss's Transaction can be done differently but this one works nicely
     static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
@@ -31,15 +30,15 @@ public class CustomerTransactions {
     	System.out.println(Config.PERSISTENCE_UNIT_NAME);
     	
     	// CUSTOMER
-        Customer customer1 = new Customer("First", "Last", "Mail", new Date());
-        CustomerAddress address1 = new CustomerAddress("Hauptstraße", "1", "12345", "Teststate", "Germany");
+        //Customer customer1 = new Customer("First", "Last", "Mail", new Date());
+        //CustomerAddress address1 = new CustomerAddress("Hauptstraße", "1", "12345", "Teststate", "Germany");
 
         //FLIGHT
-        Flight flight1 = new Flight();
-        flight1.setPlaneType("TESTPLANE");
-        FlightSegment segment1 = new FlightSegment("RH213", 15000);
-        Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
-        Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
+        //Flight flight1 = new Flight();
+        //flight1.setPlaneType("TESTPLANE");
+        //FlightSegment segment1 = new FlightSegment("RH213", 15000);
+        //Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
+        //Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
         
         
         //CustomerController customerController = new CustomerController();
@@ -57,35 +56,35 @@ public class CustomerTransactions {
             System.out.println("persist");
             
             //CUSTOMER
-            em.persist(address1);
-            customer1.setAddress(address1);
+            //em.persist(address1);
+            //customer1.setAddress(address1);
             
-            customer1.setStatus(CustomerStatus.GOLD);
+            //customer1.setStatus(CustomerStatus.GOLD);
             
-            em.persist(customer1);
+            //em.persist(customer1);
             
-            CustomerPhone phone1 = new CustomerPhone(customer1, "12313231", PhoneType.HOME_PHONE);
-            em.persist(phone1);
+            //CustomerPhone phone1 = new CustomerPhone(customer1, "12313231", PhoneType.HOME_PHONE);
+            //em.persist(phone1);
             
             
             
             //FLIGHT
-            em.persist(airport1);
-            em.persist(airport2);
+            //em.persist(airport1);
+            //em.persist(airport2);
             
-            em.persist(segment1);
+            //em.persist(segment1);
             HashSet<FlightSegment> segmentSet = new HashSet<>();
-            segmentSet.add(segment1);
+            //segmentSet.add(segment1);
             
             HashSet<Customer> customerSet = new HashSet<>();
-            customerSet.add(customer1);
+            //customerSet.add(customer1);
            
-            em.persist(flight1);
+            //em.persist(flight1);
             
-            FlightSeats flightSeat = new FlightSeats(30, 150, flight1, SeatType.BUSINESS);
-            em.persist(flightSeat);
-            em.persist(new Booking(customer1, flight1));
-            System.out.println("persist FINSH");            
+            //FlightSeats flightSeat = new FlightSeats(30, 150, flight1, SeatType.BUSINESS);
+            //em.persist(flightSeat);
+            //em.persist(new Booking(customer1, flight1));
+            //System.out.println("persist FINSH");
 
             System.out.println("flush");
             em.flush();

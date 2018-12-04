@@ -8,9 +8,6 @@ import javax.persistence.*;
 @Table(name = "FLIGHTSEGMENT")
 public class FlightSegment implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1088312445291365796L;
 
 	@Id
@@ -30,14 +27,13 @@ public class FlightSegment implements Serializable {
     @JoinColumn(name = "arrivalAirportID")
 	private Airport arrivalAirport;
 
-	
-	private FlightSegment() {
-	}
 
-	public FlightSegment(String flightName, Integer distanceInMiles) {
+	public FlightSegment(Airport departureAirport, Airport arrivalAirport) {
 		super();
-		this.flightName = flightName;
-		this.distanceInMiles = distanceInMiles;
+		this.departureAirport = departureAirport;
+		this.arrivalAirport = arrivalAirport;
+		this.flightName = departureAirport.getIataCode() + " -> " + arrivalAirport.getIataCode();
+		this.distanceInMiles = getDistanceInMiles(departureAirport.getLatitude(), departureAirport.getLongitude(), arrivalAirport.getLatitude(), arrivalAirport.getLongitude());
 	}
 
 	public int getDistanceInMiles() {
@@ -79,4 +75,13 @@ public class FlightSegment implements Serializable {
 	public void setArrivalAirport(Airport arrivalAirport) {
 		this.arrivalAirport = arrivalAirport;
 	}
+
+    public static int getDistanceInMiles(double latA, double longA, double latB, double longB) {
+        double eRadius = 6371;
+        double dLat = Math.toRadians(latB - latA);
+        double dLon = Math.toRadians(longB - longA);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Math.toRadians(latA)) * Math.cos(Math.toRadians(latB)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return (int)(eRadius * c * 0.621); //0.621 is miles per kilometer
+    }
 }
