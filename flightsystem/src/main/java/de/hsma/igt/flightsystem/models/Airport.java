@@ -39,11 +39,11 @@ public class Airport implements Serializable {
 		return iataCode;
 	}
 
-	public Float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public Float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
