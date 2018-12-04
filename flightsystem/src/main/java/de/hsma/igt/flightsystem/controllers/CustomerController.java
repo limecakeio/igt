@@ -1,6 +1,5 @@
 package de.hsma.igt.flightsystem.controllers;
 
-
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
 import de.hsma.igt.flightsystem.tools.Config;
@@ -32,56 +31,108 @@ import static java.nio.file.StandardOpenOption.CREATE;
 /**
  * Created by jenskohler on 12.12.17.
  */
-public class CustomerController  implements IController{
-    private static Logger logger = Logger.getRootLogger();
-    //accessing JBoss's Transaction can be done differently but this one works nicely
-    TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    //build the EntityManagerFactory as you would build in in Hibernate ORM
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
+public class CustomerController implements IController<Customer> {
+	private static Logger logger = Logger.getRootLogger();
+	// accessing JBoss's Transaction can be done differently but this one works
+	// nicely
+	TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+	// build the EntityManagerFactory as you would build in in Hibernate ORM
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
 
 	@Override
-	public void createObjects(List<Object> objects) {
+	public void createObjects(List<Customer> objects) {
 		try {
-			EntityManager em =emf.createEntityManager();
-			//tm.setTransactionTimeout(seconds);
+			EntityManager em = emf.createEntityManager();
+			// tm.setTransactionTimeout(seconds);
 			tm.begin();
-			for(Object object: objects){
-				Customer customer = (Customer) object;
+			for (Customer customer : objects) {
 				System.out.println(customer.getFirstname());
-				for(CustomerPhone phone : customer.getContactNumbers()) {
+				for (CustomerPhone phone : customer.getContactNumbers()) {
 					em.persist(phone);
-				}	
+				}
 				em.persist(customer.getAddress());
 				em.persist(customer);
 			}
 			em.flush();
 			em.close();
 			tm.commit();
-    	} catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
-            e.printStackTrace();
-        }
+		} catch (NotSupportedException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (HeuristicMixedException e) {
+			e.printStackTrace();
+		} catch (HeuristicRollbackException e) {
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void deleteObjects(List<Object> objects) {
+	public void deleteObjects(List<Customer> objects) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void updateObjects(List<Object> objects) {
+	public void updateObjects(List<Customer> objects) {
 		// TODO Auto-generated method stub
-		
+
 	}
-    
+
+	@Override
+	public List<Customer> readObjects() {
+		List<Customer> cust = new ArrayList<Customer>();
+
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			String queryString = new String("FROM Customer");
+
+			logger.info("Get all customer TA begins");
+			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+			tm.begin();
+
+			Query q = em.createQuery(queryString);
+
+			long queryStart = System.currentTimeMillis();
+
+			cust = q.getResultList();
+
+			long queryEnd = System.currentTimeMillis();
+
+			em.flush();
+			em.close();
+			tm.commit();
+
+			logger.info("Get all customer TA ends");
+
+			long queryTime = queryEnd - queryStart;
+
+			logger.info("Found " + cust.size() + " customers in " + queryTime + " ms.");
+
+//			String writeToFile = new String(
+//					Config.PERSISTENCE_UNIT_NAME + " READ  : " + cust.size() + " " + queryTime + "\n");
+//			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+
+		} catch (NotSupportedException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (HeuristicMixedException e) {
+			e.printStackTrace();
+		} catch (HeuristicRollbackException e) {
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			e.printStackTrace();
+		} 
+//			catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		return cust;
+	}
+
 //
 //    public void deleteAllCustomer() {
 //

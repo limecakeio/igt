@@ -2,9 +2,10 @@ package de.hsma.igt.flightsystem.controllers;
 
 import java.util.List;
 
-public interface IController {
+public interface IController<T> {
 	
-	void createObjects(List<Object> objects);
-	void updateObjects(List<Object> objects);
-	void deleteObjects(List<Object> objects);
+	public void createObjects(List<T> objects);
+	public void updateObjects(List<T> objects);
+	public void deleteObjects(List<T> objects);
+	public List<T> readObjects();
 }

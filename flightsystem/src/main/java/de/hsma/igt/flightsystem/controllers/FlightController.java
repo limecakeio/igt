@@ -17,9 +17,10 @@ import org.apache.log4j.Logger;
 
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
+import de.hsma.igt.flightsystem.models.FlightSeats;
 import de.hsma.igt.flightsystem.tools.Config;
 
-public class FlightController implements IController{
+public class FlightController implements IController<Flight>{
 
 	private static Logger logger = Logger.getRootLogger();
     //accessing JBoss's Transaction can be done differently but this one works nicely
@@ -28,15 +29,15 @@ public class FlightController implements IController{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
     
 	@Override
-	public void createObjects(List<Object> objects) {
+	public void createObjects(List<Flight> objects) {
 		try {
 			EntityManager em =emf.createEntityManager();
 			//tm.setTransactionTimeout(seconds);
 			tm.begin();
-			for(Object object: objects){
-				Flight flight = (Flight) object;
-				em.persist(flight.getFlightSeats());
+			for(Flight flight: objects){
 				em.persist(flight);
+				for(FlightSeats seats : flight.getFlightSeats())
+					em.persist(seats);
 			}
 			em.flush();
 			em.close();
@@ -56,15 +57,21 @@ public class FlightController implements IController{
 	}
 
 	@Override
-	public void updateObjects(List<Object> objects) {
+	public void updateObjects(List<Flight> objects) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleteObjects(List<Object> objects) {
+	public void deleteObjects(List<Flight> objects) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Flight> readObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -16,25 +16,22 @@ import javax.transaction.TransactionManager;
 
 import org.apache.log4j.Logger;
 
+import de.hsma.igt.flightsystem.controllers.AirportController;
 import de.hsma.igt.flightsystem.controllers.CustomerController;
 import de.hsma.igt.flightsystem.controllers.FlightController;
 import de.hsma.igt.flightsystem.controllers.IController;
+import de.hsma.igt.flightsystem.models.Airport;
+import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
+import de.hsma.igt.flightsystem.tools.AirportPopulator;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 import de.hsma.igt.flightsystem.tools.Populator;
 
 public class DatabasePopulator {
-	
-	//accessing JBoss's Transaction can be done differently but this one works nicely
-    private TransactionManager tm;
 
-    //build the EntityManagerFactory as you would build in in Hibernate ORM
-    private EntityManagerFactory emf;
-    
-    PersistenceUnit persistenceUnit;
-
+	PersistenceUnit persistenceUnit;
 
     private static Logger logger = Logger.getRootLogger();
     
@@ -44,8 +41,18 @@ public class DatabasePopulator {
     
     
     public void populateDatabase() {
-    	populate(new FlightController(), new FlightPopulator().populateAsList(10));
-    	populate(new CustomerController(), new CustomerPopulator().populateAsList(10));
+  // 	populate(new FlightController(), new FlightPopulator().populateAsList(10));
+
+    	CustomerController cc = new CustomerController();
+    	populate(cc, new CustomerPopulator().populateAsList(10));
+    	List<Customer> cl =  cc.readObjects();
+    	for(Customer customer : cl) {
+		System.out.println(customer.getEmail());
+	}
+    	//populate(new AirportController(), new AirportPopulator().getAirports());
+//    	for(Airport airport : new AirportController().readObjects()) {
+//    		System.out.println(airport.getName());
+//    	}
     }
 
 
