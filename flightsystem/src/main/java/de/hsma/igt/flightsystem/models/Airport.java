@@ -71,4 +71,20 @@ public class Airport implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Integer getAirportID() {
+		return airportID;
+	}
+
+	public void setAirportID(Integer airportID) {
+		this.airportID = airportID;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
 }

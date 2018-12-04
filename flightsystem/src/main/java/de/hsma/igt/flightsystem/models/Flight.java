@@ -1,7 +1,7 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -19,10 +19,10 @@ public class Flight implements Serializable {
 	private String planeType;
 	
 	@OneToMany(mappedBy = "flight")
-	private ArrayList<FlightSeats> flightSeats;
+	private List<FlightSeats> flightSeats;
 	
 	@OneToMany(mappedBy = "itineraryID")
-	private ArrayList<Itinerary> journey;
+	private List<Itinerary> journey;
 	
 	public Flight() {}
 
@@ -30,7 +30,7 @@ public class Flight implements Serializable {
 		return flightID;
 	}
 
-	public ArrayList<FlightSeats> getFlightSeats() {
+	public List<FlightSeats> getFlightSeats() {
 		return flightSeats;
 	}
 
@@ -42,7 +42,7 @@ public class Flight implements Serializable {
 		this.flightID = flightID;
 	}
 
-	public void setFlightSeats(ArrayList<FlightSeats> flightSeats) {
+	public void setFlightSeats(List<FlightSeats> flightSeats) {
 		this.flightSeats = flightSeats;
 	}
 
@@ -50,11 +50,11 @@ public class Flight implements Serializable {
 		this.planeType = planeType;
 	}
 
-	public ArrayList<Itinerary> getJourney() {
+	public List<Itinerary> getJourney() {
 		return journey;
 	}
 
-	public void setJourney(ArrayList<Itinerary> journey) {
+	public void setJourney(List<Itinerary> journey) {
 		this.journey = journey;
 	}
 }

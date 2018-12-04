@@ -46,7 +46,6 @@ public class CustomerController implements IController<Customer> {
 			// tm.setTransactionTimeout(seconds);
 			tm.begin();
 			for (Customer customer : objects) {
-				System.out.println(customer.getFirstname());
 				for (CustomerPhone phone : customer.getContactNumbers()) {
 					em.persist(phone);
 				}

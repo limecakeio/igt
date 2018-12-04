@@ -22,12 +22,12 @@ import javax.transaction.TransactionManager;
 
 import org.apache.log4j.Logger;
 
-import de.hsma.igt.flightsystem.models.Airport;
-import de.hsma.igt.flightsystem.models.Customer;
-import de.hsma.igt.flightsystem.models.CustomerPhone;
+import de.hsma.igt.flightsystem.models.FlightSegment;
+import de.hsma.igt.flightsystem.models.FlightSegment;
 import de.hsma.igt.flightsystem.tools.Config;
 
-public class AirportController implements IController<Airport>{
+public class FlightSegmentController implements IController<FlightSegment> {
+
 	private static Logger logger = Logger.getRootLogger();
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
@@ -35,13 +35,15 @@ public class AirportController implements IController<Airport>{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
     
 	@Override
-	public void createObjects(List<Airport> objects) {
+	public void createObjects(List<FlightSegment> objects) {
 		try {
 			EntityManager em =emf.createEntityManager();
 			//tm.setTransactionTimeout(seconds);
 			tm.begin();
-			for(Airport airport: objects){
-				em.persist(airport);
+			for(FlightSegment flightSegment: objects){
+				em.persist(flightSegment.getArrivalAirport());
+				em.persist(flightSegment.getDepartureAirport());
+				em.persist(flightSegment);
 			}
 			em.flush();
 			em.close();
@@ -61,24 +63,27 @@ public class AirportController implements IController<Airport>{
 		}
 		
 	}
+
 	@Override
-	public void updateObjects(List<Airport> objects) {
+	public void updateObjects(List<FlightSegment> objects) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
-	public void deleteObjects(List<Airport> objects) {
+	public void deleteObjects(List<FlightSegment> objects) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
-	public List<Airport> readObjects() {
-		List<Airport> airports = new ArrayList<Airport>();
+	public List<FlightSegment> readObjects() {
+		List<FlightSegment> flightSegments = new ArrayList<FlightSegment>();
 
 		try {
 			EntityManager em = emf.createEntityManager();
 
-			String queryString = new String("SELECT a FROM Airport a");
+			String queryString = new String("SELECT f FROM FlightSegment f");
 
 			logger.info("Get all customer TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
@@ -88,7 +93,7 @@ public class AirportController implements IController<Airport>{
 
 			long queryStart = System.currentTimeMillis();
 
-			airports = q.getResultList();
+			flightSegments = q.getResultList();
 
 			long queryEnd = System.currentTimeMillis();
 
@@ -100,10 +105,10 @@ public class AirportController implements IController<Airport>{
 
 			long queryTime = queryEnd - queryStart;
 
-			logger.info("Found " + airports.size() + " airports in " + queryTime + " ms.");
+			logger.info("Found " + flightSegments.size() + " Flightsegments in " + queryTime + " ms.");
 
 			String writeToFile = new String(
-					Config.PERSISTENCE_UNIT_NAME + " READ  : " + airports.size() + " " + queryTime + "\n");
+					Config.PERSISTENCE_UNIT_NAME + " READ  : " + flightSegments.size() + " " + queryTime + "\n");
 			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 
 		} catch (NotSupportedException e) {
@@ -119,6 +124,7 @@ public class AirportController implements IController<Airport>{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return airports;
+		return flightSegments;
 	}
+
 }
