@@ -1,12 +1,10 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +27,7 @@ public class Airport implements Serializable {
 	
 	public Airport() {}
 	 
-	public Airport(String iataCode, String name, Float longitude, Float latitude) {
+	public Airport(String iataCode, String name, Float latitude, Float longitude) {
 		super();
 		this.iataCode = iataCode;
 		this.name = name;
