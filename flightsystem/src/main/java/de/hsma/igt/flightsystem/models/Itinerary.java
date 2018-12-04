@@ -20,7 +20,7 @@ public class Itinerary implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer itineraryID;
+	private int itineraryID;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")

@@ -25,6 +25,10 @@ public class FlightSegmentPopulator {
             }
         }
     }
+
+    public ArrayList<FlightSegment> getFlightSegments() {
+        return flightSegments;
+    }
 }
 
 
