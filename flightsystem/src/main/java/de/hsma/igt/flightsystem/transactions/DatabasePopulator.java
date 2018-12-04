@@ -1,4 +1,4 @@
-/*
+
 package de.hsma.igt.flightsystem.transactions;
 
 import java.util.List;
@@ -40,32 +40,23 @@ public class DatabasePopulator {
     
     public DatabasePopulator(PersistenceUnit databaseUnit) {
     	persistenceUnit = databaseUnit;
-    	emf = Persistence.createEntityManagerFactory(databaseUnit.name());
-    	tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     }
     
     
     public void populateDatabase() {
-    	//populate(new FlightController(), new FlightPopulator().populateAsList(10));
+    	populate(new FlightController(), new FlightPopulator().populateAsList(10));
     	populate(new CustomerController(), new CustomerPopulator().populateAsList(10));
     }
 
 
 	private void populate(IController controller, List entities) {
-        try {
-            tm.begin();
+      
 
             logger.info(persistenceUnit + " TA begins");
             controller.createObjects(entities);
             
-            
-        } catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        }
         
         System.out.println(persistenceUnit + "FINSH");
 	}
 }
-*/
+
