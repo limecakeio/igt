@@ -1,16 +1,6 @@
 package de.hsma.igt.flightsystem.transactions;
 
-import de.hsma.igt.flightsystem.models.Airport;
-import de.hsma.igt.flightsystem.models.Booking;
-import de.hsma.igt.flightsystem.models.Customer;
-import de.hsma.igt.flightsystem.models.CustomerAddress;
-import de.hsma.igt.flightsystem.models.CustomerPhone;
-import de.hsma.igt.flightsystem.models.CustomerStatus;
-import de.hsma.igt.flightsystem.models.Flight;
-import de.hsma.igt.flightsystem.models.FlightSeats;
-import de.hsma.igt.flightsystem.models.Flightsegment;
-import de.hsma.igt.flightsystem.models.PhoneType;
-import de.hsma.igt.flightsystem.models.SeatType;
+import de.hsma.igt.flightsystem.models.*;
 import de.hsma.igt.flightsystem.tools.Config;
 
 import org.apache.log4j.Logger;
@@ -47,7 +37,7 @@ public class CustomerTransactions {
         //FLIGHT
         Flight flight1 = new Flight();
         flight1.setPlaneType("TESTPLANE");
-        Flightsegment segment1 = new Flightsegment("RH213", 15000);
+        FlightSegment segment1 = new FlightSegment("RH213", 15000);
         Airport airport1 = new Airport("FRA", "Frankfurt", 123.4f, 23.7f);
         Airport airport2 = new Airport("BER", "Berlin", 180.3f, 41.2f);
         
@@ -84,7 +74,7 @@ public class CustomerTransactions {
             em.persist(airport2);
             
             em.persist(segment1);
-            HashSet<Flightsegment> segmentSet = new HashSet<>();
+            HashSet<FlightSegment> segmentSet = new HashSet<>();
             segmentSet.add(segment1);
             
             HashSet<Customer> customerSet = new HashSet<>();
