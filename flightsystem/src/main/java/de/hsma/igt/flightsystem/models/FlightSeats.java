@@ -23,13 +23,13 @@ public class FlightSeats {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer FlightSeatID;
+	private int FlightSeatID;
 	
 	@Column
-	private Integer count;
+	private int count;
 	
 	@Column
-	private Integer price;
+	private double price;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightID")
@@ -40,7 +40,7 @@ public class FlightSeats {
 
 	public FlightSeats() {}
 	
-	public FlightSeats(Integer count, Integer price, Flight flight, SeatType seatType) {
+	public FlightSeats(int count, double price, Flight flight, SeatType seatType) {
 		super();
 		this.count = count;
 		this.price = price;
@@ -48,7 +48,7 @@ public class FlightSeats {
 		this.seatType = seatType;
 	}
 
-	public Integer getCount() {
+	public int getCount() {
 		return count;
 	}
 
@@ -60,7 +60,7 @@ public class FlightSeats {
 		return FlightSeatID;
 	}
 
-	public Integer getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -68,7 +68,7 @@ public class FlightSeats {
 		return seatType;
 	}
 
-	public void setCount(Integer count) {
+	public void setCount(int count) {
 		this.count = count;
 	}
 
@@ -80,7 +80,7 @@ public class FlightSeats {
 		FlightSeatID = flightSeatID;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
