@@ -22,19 +22,19 @@ public class Itinerary implements Serializable{
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")
-	private Flightsegment flightSegment;
+	private FlightSegment flightSegment;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightID")
 	private Flight flight;
 	
-	public Itinerary(Flightsegment flightSegment, Flight flight) {
+	public Itinerary(FlightSegment flightSegment, Flight flight) {
 		super();
 		this.flightSegment = flightSegment;
 		this.flight = flight;
 	}
 
-	public Flightsegment getCustomer() {
+	public FlightSegment getCustomer() {
 		return flightSegment;
 	}
 
@@ -42,7 +42,7 @@ public class Itinerary implements Serializable{
 		return flight;
 	}
 
-	public void setCustomer(Flightsegment flightsegment) {
+	public void setCustomer(FlightSegment flightsegment) {
 		this.flightSegment = flightsegment;
 	}
 
