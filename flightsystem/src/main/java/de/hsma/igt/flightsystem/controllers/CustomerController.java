@@ -3,6 +3,7 @@ package de.hsma.igt.flightsystem.controllers;
 
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.tools.Config;
+import de.hsma.igt.flightsystem.tools.Controller;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 
 import org.apache.log4j.Logger;
@@ -30,184 +31,14 @@ import static java.nio.file.StandardOpenOption.CREATE;
 /**
  * Created by jenskohler on 12.12.17.
  */
-public class CustomerController {
+public class CustomerController implements Controller {
     private static Logger logger = Logger.getRootLogger();
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     //build the EntityManagerFactory as you would build in in Hibernate ORM
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
 
-    public void createCustomers() {
-
-
-        /*
-        Customer customer1 = new Customer();
-
-        customer1.setC_ADDR_ID(1);
-        customer1.setC_BALANCE(99.9);
-        customer1.setC_BIRTHDATE(new Date());
-        customer1.setC_DATA("data_1");
-        customer1.setC_DISCOUNT(99.9);
-        customer1.setC_EMAIL("email_1");
-        customer1.setC_EXPIRATION(new Date());
-        customer1.setC_FNAME("fname_1");
-        customer1.setC_ID(1);
-        customer1.setC_LAST_LOGIN(new Date());
-        customer1.setC_LOGIN(new Date());
-        customer1.setC_PASSWD("password_1");
-        customer1.setC_LNAME("lname_1");
-        customer1.setC_PHONE("phone_1");
-        customer1.setC_SINCE(new Date());
-        customer1.setC_YTD_PMT(99.9);
-        customer1.setC_UNAME("uname_1");
-        */
-
-
-        List<Customer> cList = CustomerPopulator.populateCustomerAsList(Config.NUMBER_OF_CUSTOMERS);
-
-
-        try {
-            logger.info("Create customers TA begins");
-            EntityManager em = emf.createEntityManager();
-            tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
-            tm.begin();
-
-            long queryStart = System.currentTimeMillis();
-            //em.persist(customer1);
-
-
-            for (Customer c : cList) {
-                em.persist(c);
-            }
-
-            long queryEnd = System.currentTimeMillis();
-
-            em.flush();
-            em.close();
-            tm.commit();
-
-            logger.info("Create customers TA ends");
-
-            long queryTime = queryEnd - queryStart;
-
-            logger.info(cList.size() + " customers persisted in DB in " + queryTime + " ms.");
-
-            String writeToFile = new String(Config.PERSISTENCE_UNIT_NAME + " CREATE: " + cList.size() + " " + queryTime + "\n");
-
-            Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
-
-
-        } catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-
-
-    public void createCustomersFromFile() {
-
-        CustomerPopulator.populateCustomerAsFile(Config.NUMBER_OF_CUSTOMERS);
-        ObjectInputStream ois = null;
-        Customer c = null;
-
-        try {
-            Path path = Paths.get(URI.create("file:///" + Config.PERSIST_STORAGE_LOCATION));
-            FileInputStream fin = new FileInputStream(Config.PERSIST_STORAGE_LOCATION);
-            byte[] data = Files.readAllBytes(path);
-            ois = new ObjectInputStream(new ByteArrayInputStream(data));
-            logger.info("Create customers TA begins");
-            EntityManager em = emf.createEntityManager();
-            tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
-            tm.begin();
-
-            long queryStart = System.currentTimeMillis();
-
-
-
-            /*
-            In order for the object stream not to use the references mechanism the I/O methods:
-
-            writeObject()
-            readObject()
-
-            need to be replaced by the methods:
-
-            writeUnshared()
-            readUnshared()
-
-            readUnshared(), unlike readObject(), will not save a reference in ObjectInputStream’s references table, and so the memory leak will be prevented. It should be noted that if the object transferred has implemented the readResolve() method (from Serializable interface) it could be that a reference to the object is passed and saved in there. The holder of the references could also be analyzed by a heap dump in VisualVM.
-            Another solution is to invoke the ObjectOutputStream reset() method after each write. This will have the same effect.
-
-            https://orenkishon.wordpress.com/2014/06/28/java-memory-leak-caused-by-objectinputstream/
-             */
-
-
-            do {
-                c = (Customer) ois.readObject();
-                if (c != null) {
-                    em.persist(c);
-                    //logger.info(c.toString());
-                    // ois.reset();
-
-                    if (c.getCustomerID() % (Config.NUMBER_OF_CUSTOMERS / 10) == 0) {
-                        logger.info("Flushed after C_ID: " + c.getCustomerID());
-                        em.flush();
-                        em.clear();
-                    }
-
-                }
-
-            }
-            while (c != null);
-
-
-            long queryEnd = System.currentTimeMillis();
-
-            em.flush();
-            em.close();
-            tm.commit();
-
-            logger.info("Create customers TA ends");
-
-            long queryTime = queryEnd - queryStart;
-
-            logger.info(Config.NUMBER_OF_CUSTOMERS + " customers persisted in DB in " + queryTime + " ms.");
-
-            String writeToFile = new String(Config.PERSISTENCE_UNIT_NAME + " CREATE: " + Config.NUMBER_OF_CUSTOMERS + " " + queryTime + "\n");
-
-            Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-    }
+    
 
     public void deleteAllCustomer() {
 
@@ -291,6 +122,30 @@ public class CustomerController {
         }
     }
 
+    public void createCustomer(Customer customer) {
+    	try {
+			EntityManager em =emf.createEntityManager();
+			//tm.setTransactionTimeout(seconds);
+			tm.begin();
+			em.persist(customer.getAddress());
+			em.persist(customer);
+			em.flush();
+			em.close();
+			tm.commit();
+    	} catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
+            e.printStackTrace();
+        }finally {
+			System.out.println("Customer cant be saved: ID="+customer.getCustomerID()+" "+customer.getFirstname());
+		}
+    }
     public List<Customer> getAllCustomer() {
 
 
