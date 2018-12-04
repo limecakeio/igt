@@ -5,20 +5,14 @@ import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerAddress;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
 import de.hsma.igt.flightsystem.models.PhoneType;
-import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Rand;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.*;
 
 import static de.hsma.igt.flightsystem.tools.RandomGenerator.*;
 
 
-public class CustomerPopulator {
+public class CustomerPopulator implements Populator {
 
-    public static List<Customer> populateCustomerAsList(int numberOfCustomers) {
+    public List<Customer> populateAsList(int numberOfCustomers) {
         List<Customer> cList = new ArrayList<Customer>();
 
         String C_LNAME, C_FNAME;

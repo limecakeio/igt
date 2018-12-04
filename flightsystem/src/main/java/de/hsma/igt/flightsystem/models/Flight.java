@@ -21,6 +21,9 @@ public class Flight implements Serializable {
 	@OneToMany(mappedBy = "flight")
 	private Set<FlightSeats> flightSeats;
 	
+	@OneToMany(mappedBy = "itineraryID")
+	private Set<Itinerary> journey;
+	
 	public Flight() {}
 
 	public Integer getFlightID() {
@@ -45,5 +48,13 @@ public class Flight implements Serializable {
 
 	public void setPlaneType(String planeType) {
 		this.planeType = planeType;
+	}
+
+	public Set<Itinerary> getJourney() {
+		return journey;
+	}
+
+	public void setJourney(Set<Itinerary> journey) {
+		this.journey = journey;
 	}
 }

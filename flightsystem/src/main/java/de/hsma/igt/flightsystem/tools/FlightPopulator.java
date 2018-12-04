@@ -11,9 +11,9 @@ import de.hsma.igt.flightsystem.models.FlightSeats;
 import de.hsma.igt.flightsystem.models.SeatType;
 import de.hsma.igt.flightsystem.tools.RandomGenerator;
 
-public class FlightPopulator {
+public class FlightPopulator implements Populator {
 	
-	public static List<Flight> populateCustomerAsList(int numberOfCustomers) {
+	public List<Flight> populateAsList(int numberOfCustomers) {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
@@ -26,6 +26,8 @@ public class FlightPopulator {
 			List<FlightSeats> list = Arrays.asList(flightSeatsBusiness, flightSeatsEconomy);
 			Set<FlightSeats> flightSeats = new HashSet<>(list);
 			
+			flight.setPlaneType(planeType);
+			flight.setFlightSeats(flightSeats);
 			
 			flights.add(flight);
 		}
