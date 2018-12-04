@@ -4,12 +4,13 @@ import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.FlightSegment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FlightSegmentPopulator {
-    private ArrayList<Airport> airports;
-    private ArrayList<FlightSegment> flightSegments;
+    private List<Airport> airports;
+    private List<FlightSegment> flightSegments;
 
-    public FlightSegmentPopulator(ArrayList<Airport> airports) {
+    public FlightSegmentPopulator(List<Airport> airports) {
         this.airports = airports;
         this.flightSegments = new ArrayList<>();
         this.initFlightSegments();
@@ -26,7 +27,7 @@ public class FlightSegmentPopulator {
         }
     }
 
-    public ArrayList<FlightSegment> getFlightSegments() {
+    public List<FlightSegment> getFlightSegments() {
         return flightSegments;
     }
 }
