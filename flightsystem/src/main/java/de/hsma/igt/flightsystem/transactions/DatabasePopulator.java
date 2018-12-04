@@ -42,7 +42,7 @@ public class DatabasePopulator {
     
     public void populateDatabase() {
     	populate(new FlightPopulator().populateAsList(10));
-//    	doTransaction(new CustomerPopulator().populateAsList(10));
+    	populate(new CustomerPopulator().populateAsList(10));
     }
 
 

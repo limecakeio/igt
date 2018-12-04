@@ -11,7 +11,7 @@ public class DatabasePopulatorTest {
 //			p.populateDatabase();
 //		}
 		
-		DatabasePopulator p = new DatabasePopulator(PersistenceUnit.OGM_MONGODB);
+		DatabasePopulator p = new DatabasePopulator(PersistenceUnit.OGM_MYSQL);
 		p.populateDatabase();
 
 	}
