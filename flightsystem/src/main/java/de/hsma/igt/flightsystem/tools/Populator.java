@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface Populator {
 	
-	public List populateAsList(int numberOfCustomers);
+	public List populateAsList(int numberOfEntities);
 
 }

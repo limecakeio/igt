@@ -24,45 +24,37 @@ public class Itinerary implements Serializable{
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")
-	private Flightsegment flightSegment;
+	private FlightSegment flightSegment;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightID")
 	private Flight flight;
-	
+
 	@Column
 	private Date departureDateTime;
 	
 	@Column
 	private Date arrivalDateTime;
 	
-	public Itinerary(Flightsegment flightSegment, Flight flight) {
+	public Itinerary(FlightSegment flightSegment, Flight flight) {
 		super();
 		this.flightSegment = flightSegment;
 		this.flight = flight;
-	}
-
-	public Flightsegment getCustomer() {
-		return flightSegment;
 	}
 
 	public Flight getFlight() {
 		return flight;
 	}
 
-	public void setCustomer(Flightsegment flightsegment) {
-		this.flightSegment = flightsegment;
-	}
-
 	public void setFlight(Flight flight) {
 		this.flight = flight;
 	}
 
-	public Flightsegment getFlightSegment() {
+	public FlightSegment getFlightSegment() {
 		return flightSegment;
 	}
 
-	public void setFlightSegment(Flightsegment flightSegment) {
+	public void setFlightSegment(FlightSegment flightSegment) {
 		this.flightSegment = flightSegment;
 	}
 

@@ -1,3 +1,4 @@
+/*
 package de.hsma.igt.flightsystem.transactions;
 
 import java.util.List;
@@ -67,3 +68,4 @@ public class DatabasePopulator {
         System.out.println(persistenceUnit + "FINSH");
 	}
 }
+*/

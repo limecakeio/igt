@@ -5,12 +5,6 @@ import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerAddress;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
 import de.hsma.igt.flightsystem.models.PhoneType;
-import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Rand;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.*;
 
 import static de.hsma.igt.flightsystem.tools.RandomGenerator.*;
