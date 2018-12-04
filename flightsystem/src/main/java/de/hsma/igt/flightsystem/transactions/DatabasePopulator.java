@@ -14,6 +14,7 @@ import javax.transaction.TransactionManager;
 
 import org.apache.log4j.Logger;
 
+import de.hsma.igt.flightsystem.controllers.CustomerController;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
@@ -41,23 +42,17 @@ public class DatabasePopulator {
     
     
     public void populateDatabase() {
-    	populate(new FlightPopulator().populateAsList(10));
-    	populate(new CustomerPopulator().populateAsList(10));
+    	populate(new FlightController, new FlightPopulator().populateAsList(10));
+    	populate(new CustomerController(), new CustomerPopulator().populateAsList(10));
     }
 
 
-	private void populate(List entities) {
+	private void populate(Controller controller, List entities) {
         try {
             tm.begin();
 
             logger.info(persistenceUnit + " TA begins");
-            EntityManager em = emf.createEntityManager();
-            
-            for (Object entity: entities)
-            	em.persist(entity);
-            em.flush();
-            em.close();
-            tm.commit();
+            controller.createCustomers(entities);
             
             
         } catch (NotSupportedException e) {
