@@ -3,7 +3,6 @@ package de.hsma.igt.flightsystem.controllers;
 
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.tools.Config;
-import de.hsma.igt.flightsystem.tools.Controller;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 
 import org.apache.log4j.Logger;
@@ -31,7 +30,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 /**
  * Created by jenskohler on 12.12.17.
  */
-public class CustomerController implements Controller {
+public class CustomerController {
     private static Logger logger = Logger.getRootLogger();
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();

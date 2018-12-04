@@ -29,6 +29,12 @@ public class Flightsegment implements Serializable {
 	private String flightName;
 	@Column
 	private Integer distanceInMiles;
+	@ManyToOne()
+    @JoinColumn(name = "departureAirportID")
+	private Airport departureAirport;
+	@ManyToOne()
+    @JoinColumn(name = "arrivalAirportID")
+	private Airport arrivalAirport;
 	
 	private Flightsegment() {
 	}
@@ -61,5 +67,21 @@ public class Flightsegment implements Serializable {
 
 	public void setFlightSegmentID(Integer flightSegmentID) {
 		this.flightSegmentID = flightSegmentID;
+	}
+
+	public Airport getDepartureAirport() {
+		return departureAirport;
+	}
+
+	public void setDepartureAirport(Airport departureAirport) {
+		this.departureAirport = departureAirport;
+	}
+
+	public Airport getArrivalAirport() {
+		return arrivalAirport;
+	}
+
+	public void setArrivalAirport(Airport arrivalAirport) {
+		this.arrivalAirport = arrivalAirport;
 	}
 }

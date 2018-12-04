@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,6 +21,9 @@ public class Airport implements Serializable {
 	private static final long serialVersionUID = -5599306893398434798L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer airportID;
+	@Column
 	private String iataCode;
 	@Column
 	private String name;

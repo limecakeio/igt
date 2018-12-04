@@ -1,7 +1,9 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,7 @@ public class Itinerary implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer flightFlightSegmentID;
+	private Integer itineraryID;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")
@@ -27,6 +29,12 @@ public class Itinerary implements Serializable{
 	@ManyToOne()
     @JoinColumn(name = "flightID")
 	private Flight flight;
+	
+	@Column
+	private Date departureDateTime;
+	
+	@Column
+	private Date arrivalDateTime;
 	
 	public Itinerary(Flightsegment flightSegment, Flight flight) {
 		super();
@@ -48,5 +56,29 @@ public class Itinerary implements Serializable{
 
 	public void setFlight(Flight flight) {
 		this.flight = flight;
+	}
+
+	public Flightsegment getFlightSegment() {
+		return flightSegment;
+	}
+
+	public void setFlightSegment(Flightsegment flightSegment) {
+		this.flightSegment = flightSegment;
+	}
+
+	public Date getDepartureDateTime() {
+		return departureDateTime;
+	}
+
+	public void setDepartureDateTime(Date departureDateTime) {
+		this.departureDateTime = departureDateTime;
+	}
+
+	public Date getArrivalDateTime() {
+		return arrivalDateTime;
+	}
+
+	public void setArrivalDateTime(Date arrivalDateTime) {
+		this.arrivalDateTime = arrivalDateTime;
 	}
 }
