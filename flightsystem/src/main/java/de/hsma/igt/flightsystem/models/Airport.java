@@ -21,13 +21,13 @@ public class Airport implements Serializable {
 	@Column
 	private String name;
 	@Column
-	private Float longitude;
+	private double longitude;
 	@Column
-	private Float latitude;
+	private double latitude;
 	
 	public Airport() {}
 	 
-	public Airport(String iataCode, String name, Float latitude, Float longitude) {
+	public Airport(String iataCode, String name, double latitude, double longitude) {
 		super();
 		this.iataCode = iataCode;
 		this.name = name;
