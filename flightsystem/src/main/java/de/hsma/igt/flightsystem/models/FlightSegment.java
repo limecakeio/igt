@@ -2,12 +2,7 @@ package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "FLIGHTSEGMENT")
@@ -23,8 +18,18 @@ public class FlightSegment implements Serializable {
 	private int flightSegmentID;
 	@Column
 	private String flightName;
+
 	@Column
 	private int distanceInMiles;
+
+	@ManyToOne()
+    @JoinColumn(name = "departureAirportID")
+	private Airport departureAirport;
+
+	@ManyToOne()
+    @JoinColumn(name = "arrivalAirportID")
+	private Airport arrivalAirport;
+
 	
 	private FlightSegment() {
 	}
@@ -57,5 +62,21 @@ public class FlightSegment implements Serializable {
 
 	public void setFlightSegmentID(int flightSegmentID) {
 		this.flightSegmentID = flightSegmentID;
+	}
+
+	public Airport getDepartureAirport() {
+		return departureAirport;
+	}
+
+	public void setDepartureAirport(Airport departureAirport) {
+		this.departureAirport = departureAirport;
+	}
+
+	public Airport getArrivalAirport() {
+		return arrivalAirport;
+	}
+
+	public void setArrivalAirport(Airport arrivalAirport) {
+		this.arrivalAirport = arrivalAirport;
 	}
 }
