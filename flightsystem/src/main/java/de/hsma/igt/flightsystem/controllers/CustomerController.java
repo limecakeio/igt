@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -30,7 +31,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 /**
  * Created by jenskohler on 12.12.17.
  */
-public class CustomerController {
+public class CustomerController  implements IController{
     private static Logger logger = Logger.getRootLogger();
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
@@ -121,30 +122,7 @@ public class CustomerController {
         }
     }
 
-    public void createCustomer(Customer customer) {
-    	try {
-			EntityManager em =emf.createEntityManager();
-			//tm.setTransactionTimeout(seconds);
-			tm.begin();
-			em.persist(customer.getAddress());
-			em.persist(customer);
-			em.flush();
-			em.close();
-			tm.commit();
-    	} catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
-            e.printStackTrace();
-        }finally {
-			System.out.println("Customer cant be saved: ID="+customer.getCustomerID()+" "+customer.getFirstname());
-		}
-    }
+   
     public List<Customer> getAllCustomer() {
 
 
@@ -581,6 +559,48 @@ public class CustomerController {
 
 
     }
+
+	@Override
+	public void createObjects(List<Object> objects) {
+		try {
+			EntityManager em =emf.createEntityManager();
+			//tm.setTransactionTimeout(seconds);
+			
+			///This is a fucking nested Transaction
+			tm.begin();
+			for(Object object: objects){
+				Customer customer = (Customer) object;
+//				em.persist(customer.getContactNumbers());
+				em.persist(customer.getAddress());
+				//em.persist(customer);
+			}
+			em.flush();
+			em.close();
+			tm.commit();
+    	} catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
+            e.printStackTrace();
+        }
+	}
+
+	@Override
+	public void updateObjects(List<Object> objects) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteObjects(List<Object> objects) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 

@@ -1,6 +1,7 @@
 package de.hsma.igt.flightsystem.transactions;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +16,8 @@ import javax.transaction.TransactionManager;
 import org.apache.log4j.Logger;
 
 import de.hsma.igt.flightsystem.controllers.CustomerController;
+import de.hsma.igt.flightsystem.controllers.FlightController;
+import de.hsma.igt.flightsystem.controllers.IController;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
@@ -42,28 +45,22 @@ public class DatabasePopulator {
     
     
     public void populateDatabase() {
-    	populate(new FlightController, new FlightPopulator().populateAsList(10));
+    	//populate(new FlightController(), new FlightPopulator().populateAsList(10));
     	populate(new CustomerController(), new CustomerPopulator().populateAsList(10));
     }
 
 
-	private void populate(Controller controller, List entities) {
+	private void populate(IController controller, List entities) {
         try {
             tm.begin();
 
             logger.info(persistenceUnit + " TA begins");
-            controller.createCustomers(entities);
+            controller.createObjects(entities);
             
             
         } catch (NotSupportedException e) {
             e.printStackTrace();
         } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
             e.printStackTrace();
         }
         
