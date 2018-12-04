@@ -5,10 +5,10 @@ import de.hsma.igt.flightsystem.models.Airport;
 import java.util.*;
 
 public class AirportPopulator {
-    private ArrayList<Airport> airports;
+    private List<Airport> airports;
 
     public AirportPopulator() {
-        this.airports = new ArrayList<>();
+        this.airports = new ArrayList();
         this.initAirports();
     }
 
@@ -25,7 +25,7 @@ public class AirportPopulator {
         this.airports.add(new Airport("KOO", "Kongolo Airport", -5.39444, 26.99));
     }
 
-    public ArrayList<Airport> getAirports() {
+    public List<Airport> getAirports() {
         return airports;
     }
 

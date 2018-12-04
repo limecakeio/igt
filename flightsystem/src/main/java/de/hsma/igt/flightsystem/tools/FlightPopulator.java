@@ -1,9 +1,6 @@
 package de.hsma.igt.flightsystem.tools;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 import de.hsma.igt.flightsystem.models.*;
 
@@ -20,12 +17,12 @@ public class FlightPopulator {
     public static final int SEAT_COUNT_ECONOMY = 50;
     public static final double SEAT_PRICE_ECONOMY = 59.95;
 
-    private ArrayList<Airport> airports;
-    private ArrayList<FlightSegment> flightSegments;
-    private ArrayList<Flight> flights;
+    private List<Airport> airports;
+    private List<FlightSegment> flightSegments;
+    private List<Flight> flights;
 
     FlightPopulator() {
-        this.flights = new ArrayList<>();
+        this.flights = new ArrayList();
         this.airports = new AirportPopulator().getAirports();
         this.flightSegments = new FlightSegmentPopulator(this.airports).getFlightSegments();
 
@@ -113,10 +110,5 @@ public class FlightPopulator {
             }
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        FlightPopulator fp = new FlightPopulator();
-        System.out.println("OLA");
     }
 }
