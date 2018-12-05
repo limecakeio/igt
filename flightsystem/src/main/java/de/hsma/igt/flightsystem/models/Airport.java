@@ -19,7 +19,7 @@ public class Airport implements Serializable {
 	private static final long serialVersionUID = -5599306893398434798L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer airportID;
 	@Column
 	private String iataCode;

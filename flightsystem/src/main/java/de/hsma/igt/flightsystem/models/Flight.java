@@ -12,7 +12,7 @@ public class Flight implements Serializable {
 	private static final long serialVersionUID = -2213621625495102144L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int flightID;
 	
 	@Column
@@ -21,7 +21,7 @@ public class Flight implements Serializable {
 	@OneToMany(mappedBy = "flight")
 	private List<FlightSeats> flightSeats;
 	
-	@OneToMany(mappedBy = "itineraryID")
+	@OneToMany(mappedBy = "flight")
 	private List<Itinerary> journey;
 	
 	public Flight() {}
