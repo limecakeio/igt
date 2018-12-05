@@ -47,14 +47,14 @@ public class DatabasePopulator {
     public void populateDatabase() {
     	
     	//CUSTOMER
-    	CustomerController cc = new CustomerController();
+    	CustomerController cc = new CustomerController(persistenceUnit);
     	populate(cc, new CustomerPopulator().populateAsList(10));
     	
     	//AIRPORTS
-    	AirportController ac = new AirportController();
+    	AirportController ac = new AirportController(persistenceUnit);
     	AirportPopulator app = new AirportPopulator(); 
     	//FLIGHTSEGMENTS
-    	FlightSegmentController fsc = new FlightSegmentController();
+    	FlightSegmentController fsc = new FlightSegmentController(persistenceUnit);
     	FlightSegmentPopulator fsp = new FlightSegmentPopulator(app.getAirports());
     	List<FlightSegment> fsl = fsp.getFlightSegments();
     	populate(fsc, fsl);

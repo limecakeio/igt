@@ -28,6 +28,7 @@ import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSeats;
 import de.hsma.igt.flightsystem.tools.Config;
+import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
 public class FlightController implements IController<Flight>{
 
@@ -35,8 +36,12 @@ public class FlightController implements IController<Flight>{
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     //build the EntityManagerFactory as you would build in in Hibernate ORM
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
-    
+    EntityManagerFactory emf = null;
+	
+	public FlightController(PersistenceUnit persistenceUnit) {
+		Persistence.createEntityManagerFactory(persistenceUnit.name());
+	}
+	    
 	@Override
 	public void createObjects(List<Flight> objects) {
 		try {
