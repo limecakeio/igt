@@ -24,7 +24,7 @@ public class CustomerPhone implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer CustomerPhoneID;
+	private Integer customerPhoneID;
 	
 	@Column
 	private String contactNumber;
@@ -66,5 +66,13 @@ public class CustomerPhone implements Serializable {
 
 	public void setPhoneType(PhoneType phoneType) {
 		this.phoneType = phoneType;
+	}
+
+	public Integer getCustomerPhoneID() {
+		return customerPhoneID;
+	}
+
+	public void setCustomerPhoneID(Integer customerPhoneID) {
+		this.customerPhoneID = customerPhoneID;
 	}
 }

@@ -21,7 +21,7 @@ public class Flight implements Serializable {
 	@OneToMany(mappedBy = "flight")
 	private List<FlightSeats> flightSeats;
 	
-	@OneToMany(mappedBy = "itineraryID")
+	@OneToMany(mappedBy = "flight")
 	private List<Itinerary> journey;
 	
 	public Flight() {}
