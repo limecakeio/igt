@@ -66,9 +66,6 @@ public class CustomerTests {
             Assert.assertEquals(retrievedCustomer.getLastname(), customer.getLastname());
             Assert.assertEquals(retrievedCustomer.getEmail(), customer.getEmail());
             Assert.assertEquals(retrievedCustomer.getDateOfBirth(), customer.getDateOfBirth());
-
-            //Customer phones
-            Assert.assertEquals(retrievedCustomer.getContactNumbers()., customer.getFirstname());
         }
 
     }
