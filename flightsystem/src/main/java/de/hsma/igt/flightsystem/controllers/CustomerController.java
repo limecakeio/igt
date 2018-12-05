@@ -56,6 +56,7 @@ public class CustomerController implements IController<Customer> {
 				}
 				em.persist(customer.getAddress());
 				em.persist(customer);
+
 			}
 			em.flush();
 			em.close();

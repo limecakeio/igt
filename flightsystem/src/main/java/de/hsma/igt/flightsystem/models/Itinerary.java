@@ -19,7 +19,7 @@ public class Itinerary implements Serializable{
 	private static final long serialVersionUID = -6109445036290765621L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int itineraryID;
 	
 	@ManyToOne()

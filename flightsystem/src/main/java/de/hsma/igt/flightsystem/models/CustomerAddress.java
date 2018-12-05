@@ -19,7 +19,7 @@ public class CustomerAddress implements Serializable {
 	private static final long serialVersionUID = -7461527408572140221L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer addressID;
 	
 	@Column

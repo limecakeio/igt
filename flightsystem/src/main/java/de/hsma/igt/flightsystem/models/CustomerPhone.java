@@ -23,7 +23,7 @@ public class CustomerPhone implements Serializable {
 	private static final long serialVersionUID = -900068554945708639L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerPhoneID;
 	
 	@Column
