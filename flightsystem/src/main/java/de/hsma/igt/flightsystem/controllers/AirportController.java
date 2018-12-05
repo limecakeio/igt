@@ -36,7 +36,7 @@ public class AirportController implements IController<Airport>{
     EntityManagerFactory emf = null;
 	
 	public AirportController(PersistenceUnit persistenceUnit) {
-		Persistence.createEntityManagerFactory(persistenceUnit.name());
+		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
 	}
 	
 	@Override

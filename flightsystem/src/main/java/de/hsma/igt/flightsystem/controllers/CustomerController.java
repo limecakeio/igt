@@ -41,7 +41,7 @@ public class CustomerController implements IController<Customer> {
 	EntityManagerFactory emf = null;
 	
 	public CustomerController(PersistenceUnit persistenceUnit) {
-		Persistence.createEntityManagerFactory(persistenceUnit.name());
+		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
 	}
 
 	@Override
