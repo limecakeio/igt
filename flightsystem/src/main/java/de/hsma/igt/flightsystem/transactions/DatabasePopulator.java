@@ -1,6 +1,7 @@
 
 package de.hsma.igt.flightsystem.transactions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,13 +20,16 @@ import org.apache.log4j.Logger;
 import de.hsma.igt.flightsystem.controllers.AirportController;
 import de.hsma.igt.flightsystem.controllers.CustomerController;
 import de.hsma.igt.flightsystem.controllers.FlightController;
+import de.hsma.igt.flightsystem.controllers.FlightSegmentController;
 import de.hsma.igt.flightsystem.controllers.IController;
 import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
+import de.hsma.igt.flightsystem.models.FlightSegment;
 import de.hsma.igt.flightsystem.tools.AirportPopulator;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
+import de.hsma.igt.flightsystem.tools.FlightSegmentPopulator;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 import de.hsma.igt.flightsystem.tools.Populator;
 
@@ -41,18 +45,35 @@ public class DatabasePopulator {
     
     
     public void populateDatabase() {
-  // 	populate(new FlightController(), new FlightPopulator().populateAsList(10));
-
-    	CustomerController cc = new CustomerController();
+    	
+//    	//CUSTOMER
+//    	CustomerController cc = new CustomerController(persistenceUnit);
+//    	populate(cc, new CustomerPopulator().populateAsList(10));
+//    	
+//    	//AIRPORTS
+//    	AirportController ac = new AirportController(persistenceUnit);
+//    	AirportPopulator app = new AirportPopulator(); 
+//    	//FLIGHTSEGMENTS
+//    	FlightSegmentController fsc = new FlightSegmentController(persistenceUnit);
+//    	FlightSegmentPopulator fsp = new FlightSegmentPopulator(app.getAirports());
+//    	List<FlightSegment> fsl = fsp.getFlightSegments();
+//    	populate(fsc, fsl);
+    	
+    	//CUSTOMER
+    	CustomerController cc = new CustomerController(persistenceUnit);
     	populate(cc, new CustomerPopulator().populateAsList(10));
-    	List<Customer> cl =  cc.readObjects();
-    	for(Customer customer : cl) {
-		System.out.println(customer.getEmail());
-	}
-    	//populate(new AirportController(), new AirportPopulator().getAirports());
-//    	for(Airport airport : new AirportController().readObjects()) {
-//    		System.out.println(airport.getName());
-//    	}
+    	
+    	//AIRPORTS
+    	AirportController ac = new AirportController(persistenceUnit);
+    	populate(ac, new AirportPopulator().getAirports());
+    	
+    	//FLIGHTSEGMENTS
+    	FlightSegmentController fsc = new FlightSegmentController(persistenceUnit);    	
+    	populate(fsc, new FlightSegmentPopulator(ac.readObjects()).getFlightSegments());
+    	
+    	//FLIGHS
+    	FlightController fc = new FlightController(persistenceUnit);    	
+    	populate(fc, new FlightPopulator().getFlights());
     }
 
 

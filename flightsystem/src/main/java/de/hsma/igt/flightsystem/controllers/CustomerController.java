@@ -4,6 +4,7 @@ import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
 import de.hsma.igt.flightsystem.tools.Config;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
+import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
 import org.apache.log4j.Logger;
 import org.hibernate.CacheMode;
@@ -37,7 +38,11 @@ public class CustomerController implements IController<Customer> {
 	// nicely
 	TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 	// build the EntityManagerFactory as you would build in in Hibernate ORM
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
+	EntityManagerFactory emf = null;
+	
+	public CustomerController(PersistenceUnit persistenceUnit) {
+		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
+	}
 
 	@Override
 	public void createObjects(List<Customer> objects) {
@@ -46,7 +51,6 @@ public class CustomerController implements IController<Customer> {
 			// tm.setTransactionTimeout(seconds);
 			tm.begin();
 			for (Customer customer : objects) {
-				System.out.println(customer.getFirstname());
 				for (CustomerPhone phone : customer.getContactNumbers()) {
 					em.persist(phone);
 				}

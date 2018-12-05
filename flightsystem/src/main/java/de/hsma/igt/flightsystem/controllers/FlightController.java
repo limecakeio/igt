@@ -1,11 +1,19 @@
 package de.hsma.igt.flightsystem.controllers;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -15,10 +23,12 @@ import javax.transaction.TransactionManager;
 
 import org.apache.log4j.Logger;
 
+import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSeats;
 import de.hsma.igt.flightsystem.tools.Config;
+import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
 public class FlightController implements IController<Flight>{
 
@@ -26,8 +36,12 @@ public class FlightController implements IController<Flight>{
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     //build the EntityManagerFactory as you would build in in Hibernate ORM
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
-    
+    EntityManagerFactory emf = null;
+	
+	public FlightController(PersistenceUnit persistenceUnit) {
+		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
+	}
+	    
 	@Override
 	public void createObjects(List<Flight> objects) {
 		try {
@@ -70,8 +84,52 @@ public class FlightController implements IController<Flight>{
 
 	@Override
 	public List<Flight> readObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<Flight> flights = new ArrayList<Flight>();
 
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			String queryString = new String("SELECT a FROM Airport a");
+
+			logger.info("Get all customer TA begins");
+			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+			tm.begin();
+
+			Query q = em.createQuery(queryString);
+
+			long queryStart = System.currentTimeMillis();
+
+			flights = q.getResultList();
+
+			long queryEnd = System.currentTimeMillis();
+
+			em.flush();
+			em.close();
+			tm.commit();
+
+			logger.info("Get all customer TA ends");
+
+			long queryTime = queryEnd - queryStart;
+
+			logger.info("Found " + flights.size() + " airports in " + queryTime + " ms.");
+
+			String writeToFile = new String(
+					Config.PERSISTENCE_UNIT_NAME + " READ  : " + flights.size() + " " + queryTime + "\n");
+			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+
+		} catch (NotSupportedException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (HeuristicMixedException e) {
+			e.printStackTrace();
+		} catch (HeuristicRollbackException e) {
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return flights;
+	}
 }
