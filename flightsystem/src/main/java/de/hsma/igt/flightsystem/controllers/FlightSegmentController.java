@@ -36,7 +36,7 @@ public class FlightSegmentController implements IController<FlightSegment> {
     EntityManagerFactory emf = null;
 	
 	public FlightSegmentController(PersistenceUnit persistenceUnit) {
-		Persistence.createEntityManagerFactory(persistenceUnit.name());
+		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
 	}
 	
     
