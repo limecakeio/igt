@@ -22,6 +22,7 @@ import de.hsma.igt.flightsystem.controllers.CustomerController;
 import de.hsma.igt.flightsystem.controllers.IController;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
+import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 import junit.extensions.RepeatedTest;
 
 import org.junit.runners.Parameterized;
@@ -33,15 +34,18 @@ public class TestScenario {
     @Parameters(name = "{index}: {0}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"igt_mysql"},
-                {"igt_mongodb"}
+                {"igt_mysql", PersistenceUnit.OGM_MYSQL},
+//                {"igt_mongodb", PersistenceUnit.OGM_MONGODB}
 //                {"igt_redis"},
 //                {"igt_cassandra"}
         });
     }
+
+	private PersistenceUnit persistenceUnit;
 	
-	public TestScenario(String container) {
+	public TestScenario(String container, PersistenceUnit persisenceUnit) {
         this.container = container;
+        this.persistenceUnit = persisenceUnit;
     }
 
 	private static String[] images; 
@@ -149,7 +153,7 @@ public class TestScenario {
 
 	@Test
 	public void populateCustomer() {
-    	IController<Customer> cc = new CustomerController();
+    	IController<Customer> cc = new CustomerController(persistenceUnit);
     	List<Customer> cl = new CustomerPopulator().populateAsList(10);
     	
     	cc.createObjects(cl);
