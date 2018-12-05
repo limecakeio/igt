@@ -21,7 +21,7 @@ public class FlightPopulator {
     private List<FlightSegment> flightSegments;
     private List<Flight> flights;
 
-    FlightPopulator() {
+    public FlightPopulator() {
         this.flights = new ArrayList();
         this.airports = new AirportPopulator().getAirports();
         this.flightSegments = new FlightSegmentPopulator(this.airports).getFlightSegments();
@@ -111,4 +111,12 @@ public class FlightPopulator {
         }
         return null;
     }
+
+	public List<Flight> getFlights() {
+		return flights;
+	}
+
+	public void setFlights(List<Flight> flights) {
+		this.flights = flights;
+	}
 }

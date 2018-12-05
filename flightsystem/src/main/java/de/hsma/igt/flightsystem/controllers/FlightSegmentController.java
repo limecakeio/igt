@@ -47,8 +47,6 @@ public class FlightSegmentController implements IController<FlightSegment> {
 			//tm.setTransactionTimeout(seconds);
 			tm.begin();
 			for(FlightSegment flightSegment: objects){
-				em.persist(flightSegment.getArrivalAirport());
-				em.persist(flightSegment.getDepartureAirport());
 				em.persist(flightSegment);
 			}
 			em.flush();
