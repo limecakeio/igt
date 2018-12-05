@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import de.hsma.igt.flightsystem.models.FlightSegment;
 import de.hsma.igt.flightsystem.models.FlightSegment;
 import de.hsma.igt.flightsystem.tools.Config;
+import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
 public class FlightSegmentController implements IController<FlightSegment> {
 
@@ -32,7 +33,12 @@ public class FlightSegmentController implements IController<FlightSegment> {
     //accessing JBoss's Transaction can be done differently but this one works nicely
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     //build the EntityManagerFactory as you would build in in Hibernate ORM
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
+    EntityManagerFactory emf = null;
+	
+	public FlightSegmentController(PersistenceUnit persistenceUnit) {
+		Persistence.createEntityManagerFactory(persistenceUnit.name());
+	}
+	
     
 	@Override
 	public void createObjects(List<FlightSegment> objects) {
