@@ -2,6 +2,7 @@ package de.hsma.igt.flightsystem.controllers;
 
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.CustomerPhone;
+import de.hsma.igt.flightsystem.models.CustomerStatus;
 import de.hsma.igt.flightsystem.tools.Config;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
@@ -54,9 +55,7 @@ public class CustomerController implements IController<Customer> {
 				for (CustomerPhone phone : customer.getContactNumbers()) {
 					em.persist(phone);
 				}
-				em.persist(customer.getAddress());
 				em.persist(customer);
-
 			}
 			em.flush();
 			em.close();

@@ -4,27 +4,25 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMER_ADDRESS")
-public class CustomerAddress implements Serializable {
+public class CustomerAddress extends BaseEntity{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7461527408572140221L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer addressID;
-	
 	@Column
 	private String streetname;
-	
 	@Column
 	private String streetnumber;
 	@Column
@@ -33,6 +31,9 @@ public class CustomerAddress implements Serializable {
 	private String state;
 	@Column
 	private String country;
+	
+	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+	private Customer customer;
 	
 	public CustomerAddress() {}
 	
@@ -43,10 +44,6 @@ public class CustomerAddress implements Serializable {
 		this.postcode = postcode;
 		this.state = state;
 		this.country = country;
-	}
-
-	public Integer getAddressID() {
-		return addressID;
 	}
 
 	public String getCountry() {
@@ -67,10 +64,6 @@ public class CustomerAddress implements Serializable {
 
 	public String getStreetnumber() {
 		return streetnumber;
-	}
-
-	public void setAddressID(Integer addressID) {
-		this.addressID = addressID;
 	}
 
 	public void setCountry(String country) {

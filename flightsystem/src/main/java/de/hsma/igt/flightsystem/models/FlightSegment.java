@@ -6,13 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "FLIGHTSEGMENT")
-public class FlightSegment implements Serializable {
-
+public class FlightSegment extends BaseEntity {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1088312445291365796L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int flightSegmentID;
 	@Column
 	private String flightName;
 
@@ -43,10 +42,6 @@ public class FlightSegment implements Serializable {
 	public String getFlightName() {
 		return flightName;
 	}
-	
-	public int getFlightSegmentID() {
-		return flightSegmentID;
-	}
 
 	public void setDistanceInMiles(int distanceInMiles) {
 		this.distanceInMiles = distanceInMiles;
@@ -54,10 +49,6 @@ public class FlightSegment implements Serializable {
 
 	public void setFlightName(String flightName) {
 		this.flightName = flightName;
-	}
-
-	public void setFlightSegmentID(int flightSegmentID) {
-		this.flightSegmentID = flightSegmentID;
 	}
 
 	public Airport getDepartureAirport() {

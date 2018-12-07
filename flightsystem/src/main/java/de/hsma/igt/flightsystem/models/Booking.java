@@ -12,13 +12,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOKING")
-public class Booking implements Serializable{
+public class Booking extends BaseEntity {
 	
 	private static final long serialVersionUID = -6109445036290765621L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer customerFlightID;
 	
 	@ManyToOne()
     @JoinColumn(name = "customerID")
