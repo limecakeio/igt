@@ -74,6 +74,15 @@ public class DatabasePopulator {
     	//FLIGHS
     	FlightController fc = new FlightController(persistenceUnit);    	
     	populate(fc, new FlightPopulator().getFlights());
+    	
+    	//check uopdate customer
+    	List<Customer> customerList =  cc.readObjects();
+    	for(Customer customer : customerList) {
+    		customer.setEmail(customer.getEmail() + "_new");
+    	}
+    	
+    	
+    	cc.updateObjects(customerList);
     }
 
 

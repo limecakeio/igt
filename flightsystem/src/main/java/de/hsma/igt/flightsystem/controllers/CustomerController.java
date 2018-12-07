@@ -72,14 +72,87 @@ public class CustomerController implements IController<Customer> {
 
 	@Override
 	public void deleteObjects(List<Customer> objects) {
-		// TODO Auto-generated method stub
+		  try {
+            //logger.info("Delete customer TA begins");
+            EntityManager em = emf.createEntityManager();
+            tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+            tm.begin();
+
+
+            // long queryStart = System.currentTimeMillis();
+            for(Customer customer : objects) {
+            	Customer cust = em.find(customer.getClass(), customer.getId());
+            	em.remove(cust);
+            }
+            // logger.info("Found customer: " + cust.toString());
+            // logger.info("Deleting customer...");
+
+            //  long queryEnd = System.currentTimeMillis();
+
+
+            em.flush();
+            em.close();
+            tm.commit();
+            //logger.info("Delete customer TA ends");
+
+            //  long queryTime = queryEnd - queryStart;
+
+            // logger.info("Customer successfully deleted in " + queryTime + " ms.");
+
+
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
+            e.printStackTrace();
+        }
 
 	}
 
 	@Override
 	public void updateObjects(List<Customer> objects) {
-		// TODO Auto-generated method stub
+		 try {
+           logger.info("Update customer TA begins");
+           EntityManager em = emf.createEntityManager();
+           tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+           tm.begin();
 
+
+           //long queryStart = System.currentTimeMillis();
+           for (Customer customer : objects) {
+        	   System.out.println("Updateing CUstomer: "+ customer.getId());
+        	   Customer customerToUpdate = em.find(Customer.class, customer.getId());
+        	   customerToUpdate = customer;
+        	   em.merge(customerToUpdate);
+           }
+           //long queryEnd = System.currentTimeMillis();
+
+
+           em.flush();
+           em.close();
+           tm.commit();
+           logger.info("Update customer TA ends");
+
+           //long queryTime = queryEnd - queryStart;
+
+           //logger.info("Customer successfully persisted in " + queryTime + " ms.");
+
+       } catch (NotSupportedException e) {
+           e.printStackTrace();
+       } catch (SystemException e) {
+           e.printStackTrace();
+       } catch (HeuristicMixedException e) {
+           e.printStackTrace();
+       } catch (HeuristicRollbackException e) {
+           e.printStackTrace();
+       } catch (RollbackException e) {
+           e.printStackTrace();
+       }
 	}
 
 	@Override
