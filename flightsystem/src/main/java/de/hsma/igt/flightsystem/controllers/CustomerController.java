@@ -56,7 +56,6 @@ public class CustomerController implements IController<Customer> {
 					em.persist(phone);
 				}
 				em.persist(customer);
-
 			}
 			em.flush();
 			em.close();

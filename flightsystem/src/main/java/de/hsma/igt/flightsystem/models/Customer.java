@@ -28,8 +28,8 @@ public class Customer extends BaseEntity {
 	@Column
 	private Date dateOfBirth;
 	
-	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, 
-            fetch = FetchType.LAZY, optional = false)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "addressID", nullable = false)
 	private CustomerAddress address;
 
 	@Enumerated(EnumType.STRING)

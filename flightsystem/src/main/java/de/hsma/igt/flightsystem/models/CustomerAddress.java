@@ -31,8 +31,8 @@ public class CustomerAddress extends BaseEntity{
 	private String state;
 	@Column
 	private String country;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customerID")
+	
+	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
 	private Customer customer;
 	
 	public CustomerAddress() {}
