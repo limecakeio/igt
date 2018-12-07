@@ -30,7 +30,7 @@ public abstract class GenericJpaDao<T, ID extends Serializable> implements Gerne
 		return null;
 	}
 
-	@Transactional(readOnly = true)
+	@Override
 	public T findById(ID id) {
 		// TODO Auto-generated method stub
 		return null;

@@ -69,14 +69,6 @@ public class Airport extends BaseEntity {
 		this.name = name;
 	}
 
-	public Integer getAirportID() {
-		return airportID;
-	}
-
-	public void setAirportID(Integer airportID) {
-		this.airportID = airportID;
-	}
-
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}

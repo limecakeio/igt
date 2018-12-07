@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer extends BaseEntity {
@@ -25,15 +27,17 @@ public class Customer extends BaseEntity {
 	private String email;
 	@Column
 	private Date dateOfBirth;
-	// OneToOne bidirectional association
-	@OneToOne
+	
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, 
+            fetch = FetchType.LAZY, optional = false)
 	private CustomerAddress address;
 
 	@Enumerated(EnumType.STRING)
-	private CustomerStatus status;
+	private CustomerStatus status = CustomerStatus.NONE;
 
-	// OneToMany unidirectional association cascade = CascadeType.ALL, orphanRemoval = true
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",
+    		cascade = CascadeType.ALL,
+    		orphanRemoval = true)
 	private Set<CustomerPhone> contactNumbers;
     
 	public Customer() {
