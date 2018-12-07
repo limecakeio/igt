@@ -4,6 +4,7 @@ package de.hsma.igt.flightsystem.transactions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -74,8 +75,29 @@ public class DatabasePopulator {
     	//FLIGHS
     	FlightController fc = new FlightController(persistenceUnit);    	
     	populate(fc, new FlightPopulator().getFlights());
+    	
+    	//check update customer
+    	List<Customer> customerList =  cc.readObjects();
+    	for(Customer customer : customerList) {
+    		customer.setEmail(customer.getEmail() + "_new");
+    	}
+    	
+    	
+    	cc.updateObjects(customerList);
+    	
+    	//check update airport
+    	System.out.println("Updating Airports");
+    	
+    	List<Airport> airportList = ac.readObjects();
+    	for(Airport airport : airportList) {
+    		if(airport.getIataCode().equals("SIN")){
+    			System.out.println("1x");
+    			airport.setLatitude(666666);
+    		}
+    	}
+    	ac.updateObjects(airportList);
+    	
     }
-
 
 	private void populate(IController controller, List entities) {
       
