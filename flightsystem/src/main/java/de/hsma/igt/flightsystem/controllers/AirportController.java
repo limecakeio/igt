@@ -68,13 +68,85 @@ public class AirportController implements IController<Airport>{
 	}
 	@Override
 	public void updateObjects(List<Airport> objects) {
-		// TODO Auto-generated method stub
+		try {
+	           logger.info("Update airport TA begins");
+	           EntityManager em = emf.createEntityManager();
+	           tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+	           tm.begin();
+
+
+	           //long queryStart = System.currentTimeMillis();
+	           for (Airport airport : objects) {
+	        	   Airport airportToUpdate = em.find(Airport.class, airport.getId());
+	        	   airportToUpdate = airport;
+	        	   em.merge(airportToUpdate);
+	           }
+	           //long queryEnd = System.currentTimeMillis();
+
+
+	           em.flush();
+	           em.close();
+	           tm.commit();
+	           logger.info("Update airport TA ends");
+
+	           //long queryTime = queryEnd - queryStart;
+
+	           //logger.info("Airport successfully persisted in " + queryTime + " ms.");
+
+	       } catch (NotSupportedException e) {
+	           e.printStackTrace();
+	       } catch (SystemException e) {
+	           e.printStackTrace();
+	       } catch (HeuristicMixedException e) {
+	           e.printStackTrace();
+	       } catch (HeuristicRollbackException e) {
+	           e.printStackTrace();
+	       } catch (RollbackException e) {
+	           e.printStackTrace();
+	       }
 		
 	}
 	@Override
 	public void deleteObjects(List<Airport> objects) {
-		// TODO Auto-generated method stub
-		
+		  try {
+	            //logger.info("Delete customer TA begins");
+	            EntityManager em = emf.createEntityManager();
+	            tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
+	            tm.begin();
+
+
+	            // long queryStart = System.currentTimeMillis();
+	            for(Airport airport : objects) {
+	            	Airport airp = em.find(airport.getClass(), airport.getId());
+	            	em.remove(airp);
+	            }
+	            // logger.info("Found customer: " + cust.toString());
+	            // logger.info("Deleting customer...");
+
+	            //  long queryEnd = System.currentTimeMillis();
+
+
+	            em.flush();
+	            em.close();
+	            tm.commit();
+	            //logger.info("Delete customer TA ends");
+
+	            //  long queryTime = queryEnd - queryStart;
+
+	            // logger.info("Customer successfully deleted in " + queryTime + " ms.");
+
+
+	        } catch (NotSupportedException e) {
+	            e.printStackTrace();
+	        } catch (SystemException e) {
+	            e.printStackTrace();
+	        } catch (HeuristicMixedException e) {
+	            e.printStackTrace();
+	        } catch (HeuristicRollbackException e) {
+	            e.printStackTrace();
+	        } catch (RollbackException e) {
+	            e.printStackTrace();
+	        }
 	}
 	@Override
 	public List<Airport> readObjects() {
