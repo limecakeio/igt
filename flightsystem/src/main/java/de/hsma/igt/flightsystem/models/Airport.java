@@ -17,7 +17,7 @@ public class Airport extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 7718875716371374309L;
-	private Integer airportID;
+
 	@Column
 	private String iataCode;
 	@Column
