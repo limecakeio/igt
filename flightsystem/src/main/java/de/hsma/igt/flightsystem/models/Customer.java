@@ -10,15 +10,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer implements Serializable {
+public class Customer extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6109445036290765621L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer customerID;
+	
 	@Column
 	private String firstname;
 	@Column
@@ -57,10 +55,6 @@ public class Customer implements Serializable {
 		return contactNumbers;
 	}
 
-	public Integer getCustomerID() {
-		return customerID;
-	}
-
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -87,10 +81,6 @@ public class Customer implements Serializable {
 
 	public void setContactNumbers(Set<CustomerPhone> contactNumbers) {
 		this.contactNumbers = contactNumbers;
-	}
-
-	public void setCustomerID(Integer customerID) {
-		this.customerID = customerID;
 	}
 
 	public void setDateOfBirth(Date dateOfBirth) {

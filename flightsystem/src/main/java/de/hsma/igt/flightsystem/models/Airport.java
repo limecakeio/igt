@@ -11,15 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "AIRPORT")
-public class Airport implements Serializable {
-
+public class Airport extends BaseEntity {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5599306893398434798L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static final long serialVersionUID = 7718875716371374309L;
 	private Integer airportID;
 	@Column
 	private String iataCode;

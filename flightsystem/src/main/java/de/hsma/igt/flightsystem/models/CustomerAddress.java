@@ -11,20 +11,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMER_ADDRESS")
-public class CustomerAddress implements Serializable {
+public class CustomerAddress extends BaseEntity{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7461527408572140221L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer addressID;
-	
 	@Column
 	private String streetname;
-	
 	@Column
 	private String streetnumber;
 	@Column
@@ -45,10 +40,6 @@ public class CustomerAddress implements Serializable {
 		this.country = country;
 	}
 
-	public Integer getAddressID() {
-		return addressID;
-	}
-
 	public String getCountry() {
 		return country;
 	}
@@ -67,10 +58,6 @@ public class CustomerAddress implements Serializable {
 
 	public String getStreetnumber() {
 		return streetnumber;
-	}
-
-	public void setAddressID(Integer addressID) {
-		this.addressID = addressID;
 	}
 
 	public void setCountry(String country) {
