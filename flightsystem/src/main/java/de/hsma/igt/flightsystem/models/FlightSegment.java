@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "FLIGHTSEGMENT")
 public class FlightSegment extends BaseEntity {
 	/**

@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "FLIGHT")
 public class Flight extends BaseEntity {
 

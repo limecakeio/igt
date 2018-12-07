@@ -12,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "CUSTOMER_ADDRESS")
 public class CustomerAddress extends BaseEntity{
 	

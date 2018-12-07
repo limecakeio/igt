@@ -151,7 +151,7 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			EntityManager em = emf.createEntityManager();
 
 			String queryString = new String("SELECT x FROM "+ this.persistentClass.getSimpleName()+ " x");
-
+			
 			logger.info("Get all customer TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
 			tm.begin();
