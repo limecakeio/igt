@@ -125,7 +125,6 @@ public class CustomerController implements IController<Customer> {
 
            //long queryStart = System.currentTimeMillis();
            for (Customer customer : objects) {
-        	   System.out.println("Updateing CUstomer: "+ customer.getId());
         	   Customer customerToUpdate = em.find(Customer.class, customer.getId());
         	   customerToUpdate = customer;
         	   em.merge(customerToUpdate);
