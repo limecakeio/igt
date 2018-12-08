@@ -9,18 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "AIRPORT")
-public class Airport implements Serializable {
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
+@Table(name = "AIRPORT")
+public class Airport extends BaseEntity {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5599306893398434798L;
+	private static final long serialVersionUID = 7718875716371374309L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer airportID;
 	@Column
 	private String iataCode;
 	@Column
@@ -70,14 +70,6 @@ public class Airport implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getAirportID() {
-		return airportID;
-	}
-
-	public void setAirportID(Integer airportID) {
-		this.airportID = airportID;
 	}
 
 	public void setLongitude(double longitude) {

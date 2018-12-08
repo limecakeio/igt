@@ -13,31 +13,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "CUSTOMER_PHONE")
-public class CustomerPhone implements Serializable {
-	
+public class CustomerPhone extends BaseEntity{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -900068554945708639L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer customerPhoneID;
-	
 	@Column
 	private String contactNumber;
-	
+
 	@ManyToOne()
-    @JoinColumn(name = "customerID")
+	@JoinColumn(name = "customerID")
 	private Customer customer;
-	
+
 	@Enumerated(EnumType.STRING)
 	private PhoneType phoneType;
 
-	public CustomerPhone() {}
-	
+	public CustomerPhone() {
+	}
+
 	public CustomerPhone(Customer customer, String contactNumber, PhoneType phoneType) {
 		this.customer = customer;
 		this.contactNumber = contactNumber;
@@ -66,13 +66,5 @@ public class CustomerPhone implements Serializable {
 
 	public void setPhoneType(PhoneType phoneType) {
 		this.phoneType = phoneType;
-	}
-
-	public Integer getCustomerPhoneID() {
-		return customerPhoneID;
-	}
-
-	public void setCustomerPhoneID(Integer customerPhoneID) {
-		this.customerPhoneID = customerPhoneID;
 	}
 }

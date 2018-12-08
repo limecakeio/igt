@@ -11,35 +11,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "FLIGHT_SEATS")
-public class FlightSeats {
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
+@Table(name = "FLIGHT_SEATS")
+public class FlightSeats extends BaseEntity {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -900068554945708639L;
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int FlightSeatID;
-	
 	@Column
 	private int count;
-	
+
 	@Column
 	private double price;
-	
+
 	@ManyToOne()
-    @JoinColumn(name = "flightID")
+	@JoinColumn(name = "flightID")
 	private Flight flight;
-	
+
 	@Enumerated(EnumType.STRING)
 	private SeatType seatType;
 
-	public FlightSeats() {}
-	
+	public FlightSeats() {
+	}
+
 	public FlightSeats(int count, double price, Flight flight, SeatType seatType) {
 		super();
 		this.count = count;
@@ -56,10 +55,6 @@ public class FlightSeats {
 		return flight;
 	}
 
-	public Integer getFlightSeatID() {
-		return FlightSeatID;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -74,10 +69,6 @@ public class FlightSeats {
 
 	public void setFlight(Flight flight) {
 		this.flight = flight;
-	}
-
-	public void setFlightSeatID(Integer flightSeatID) {
-		FlightSeatID = flightSeatID;
 	}
 
 	public void setPrice(double price) {

@@ -12,15 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "ITINERARY")
-public class Itinerary implements Serializable{
+public class Itinerary extends BaseEntity{
 	
 	private static final long serialVersionUID = -6109445036290765621L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int itineraryID;
 	
 	@ManyToOne()
     @JoinColumn(name = "flightSegmentID")

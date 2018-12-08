@@ -5,15 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "FLIGHT")
-public class Flight implements Serializable {
+public class Flight extends BaseEntity {
 
 	private static final long serialVersionUID = -2213621625495102144L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int flightID;
 	
 	@Column
 	private String planeType;
@@ -26,20 +25,12 @@ public class Flight implements Serializable {
 	
 	public Flight() {}
 
-	public int getFlightID() {
-		return flightID;
-	}
-
 	public List<FlightSeats> getFlightSeats() {
 		return flightSeats;
 	}
 
 	public String getPlaneType() {
 		return planeType;
-	}
-
-	public void setFlightID(int flightID) {
-		this.flightID = flightID;
 	}
 
 	public void setFlightSeats(List<FlightSeats> flightSeats) {

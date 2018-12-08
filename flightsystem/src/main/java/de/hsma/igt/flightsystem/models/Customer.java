@@ -1,24 +1,22 @@
 package de.hsma.igt.flightsystem.models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "CUSTOMER")
-public class Customer implements Serializable {
+public class Customer extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6109445036290765621L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer customerID;
+	
 	@Column
 	private String firstname;
 	@Column
@@ -27,15 +25,17 @@ public class Customer implements Serializable {
 	private String email;
 	@Column
 	private Date dateOfBirth;
-	// OneToOne bidirectional association
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "addressID", nullable = false)
 	private CustomerAddress address;
 
 	@Enumerated(EnumType.STRING)
-	private CustomerStatus status;
+	private CustomerStatus status = CustomerStatus.NONE;
 
-	// OneToMany unidirectional association cascade = CascadeType.ALL, orphanRemoval = true
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",
+    		cascade = CascadeType.ALL,
+    		orphanRemoval = true)
 	private Set<CustomerPhone> contactNumbers;
     
 	public Customer() {
@@ -55,10 +55,6 @@ public class Customer implements Serializable {
 
 	public Set<CustomerPhone> getContactNumbers() {
 		return contactNumbers;
-	}
-
-	public Integer getCustomerID() {
-		return customerID;
 	}
 
 	public Date getDateOfBirth() {
@@ -87,10 +83,6 @@ public class Customer implements Serializable {
 
 	public void setContactNumbers(Set<CustomerPhone> contactNumbers) {
 		this.contactNumbers = contactNumbers;
-	}
-
-	public void setCustomerID(Integer customerID) {
-		this.customerID = customerID;
 	}
 
 	public void setDateOfBirth(Date dateOfBirth) {
