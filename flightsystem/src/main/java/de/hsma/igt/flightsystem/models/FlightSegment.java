@@ -10,6 +10,10 @@ import org.hibernate.search.annotations.Indexed;
 @Indexed
 @Table(name = "FLIGHTSEGMENT")
 public class FlightSegment extends BaseEntity {
+	public FlightSegment() {
+		super();
+	}
+
 	/**
 	 * 
 	 */

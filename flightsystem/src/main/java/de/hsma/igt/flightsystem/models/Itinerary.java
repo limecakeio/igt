@@ -19,6 +19,10 @@ import org.hibernate.search.annotations.Indexed;
 @Table(name = "ITINERARY")
 public class Itinerary extends BaseEntity{
 	
+	public Itinerary() {
+		super();
+	}
+
 	private static final long serialVersionUID = -6109445036290765621L;
 	
 	@ManyToOne()
