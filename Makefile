@@ -3,54 +3,80 @@ SHELL := /bin/sh
 include .env
 
 db_image_list=$(foreach image,$(docker_db_repos), docker pull $(image);)
+stop_dbs=$(foreach db,$(db_names), docker stop $(db);)
+remove_dbs=$(foreach db,$(db_names), docker rm $(db);)
+
 vm_image_list=$(foreach image,$(docker_vm_repos), docker pull $(image);)
+stop_vms=$(foreach vm,$(vm_names), docker stop $(vm);)
+remove_vms=$(foreach vm,$(vm_names), docker rm $(vm);)
 
 container_list=$(shell docker ps -aq | tr '\n' ' ')
-cmds=$(foreach container,$(container_list), docker rm -f $(container);)
 
-.PHONY: all
+.PHONY: help
+help:
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\.PHONY://' | sed -e 's/##/ -> /'
+
+.PHONY: all ## Retrieves all container images (VMs and DBMSs)
 all: clean dbms vms
 
-.PHONY: dbms
-dbms: dbimages mysql mongo cassandra redis neo
-
-.PHONY: vms
-vms: vmimages vm
-
-.PHONY: dbimages
-dbimages:
+.PHONY: dbms ## Retrieves all remote dbms images
+dbms:
 	$(db_image_list)
 
-.PHONY: vmimages
-vmimages:
+.PHONY: run-dbms ## Runs all of the IGT DBMSs
+run-dbms: mysql mongo neo cassandra redis
+
+.PHONY: clean-dbms ## Attempts to stop and remove all IGT DBMSs
+clean-dbms:
+	@echo "Stopping all DB containers..."
+	- $(stop_dbs)
+	@echo "Removing all DB containers..."
+	- $(remove_dbs)
+	@echo "... done." ;
+
+.PHONY: vms ## Retrieves all remote vm images
+vms:
 	$(vm_image_list)
 
-.PHONY: mysql
+.PHONY: run-vms ## Runs all of the IGT VMs
+run-vms: vm
+
+.PHONY: clean-vms ## Attempts to stop and remove all IGT VMs
+clean-vms:
+	@echo "Stopping all VM containers..."
+	- $(stop_vms)
+	@echo "Removing all VM containers..."
+	- $(remove_vms)
+	@echo "... done." ;
+
+.PHONY: mysql ## Runs the MySQL relational database container
 mysql:
 	docker run --name $(igt_mysql) -e MYSQL_ROOT_PASSWORD=$(skelleton_key) -d -p $(mysql_ports) mysql
 
-.PHONY: mongo
+.PHONY: mongo ## Runs the MongoDB document store container
 mongo:
 	mkdir ~/data
 	docker run --name $(igt_mongo) -d -p $(mongo_ports) -v ~/data:/data/db mongo
 
-.PHONY: cassandra
+.PHONY: cassandra ## Runs the Cassandra column store container
 cassandra:
 	docker run --name $(igt_cassandra) -d -p $(cassandra_ports) cassandra
 
-.PHONY: redis
+.PHONY: redis ## Runs the Redis key-value store container
 redis:
 	docker run --name $(igt_redis) -d -p $(redis_ports) redis
 
-.PHONY: neo
+.PHONY: neo ## Runs the neo4j graph store container
 neo:
-	docker run -d -p $(neo_ports) -v ~/neo4j/data:/data -v ~/neo4j/logs:/logs neo4j:3.0
+	docker run --name $(igt_neo) -d -p $(neo_ports) -v ~/neo4j/data:/data -v ~/neo4j/logs:/logs neo4j:3.0
 
-.PHONY: vm
+.PHONY: vm ## Runs the Ubuntu virtual machine container
 vm:
 	docker run --name $(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) 1527079/igt-ubuntu-vm
 #Removes all containers and resources associated with the IGT datastores
-.PHONY: clean
-clean :
-	sudo rm -f -r ~/data
-	$(cmds)
+
+.PHONY: clean ## Stops and removes all containers as well as resources [will ask for sudo]
+clean : clean-dbms clean-vms
+	@echo "Removing data and neo4j folder from HOME..."
+	sudo rm -f -r ~/data ~/neo4j
+	@echo "...done"
