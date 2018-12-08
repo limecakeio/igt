@@ -10,14 +10,15 @@ vm_image_list=$(foreach image,$(docker_vm_repos), docker pull $(image);)
 stop_vms=$(foreach vm,$(vm_names), docker stop $(vm);)
 remove_vms=$(foreach vm,$(vm_names), docker rm $(vm);)
 
-container_list=$(shell docker ps -aq | tr '\n' ' ')
-
 .PHONY: help
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\.PHONY://' | sed -e 's/##/ -> /'
 
 .PHONY: all ## Retrieves all container images (VMs and DBMSs)
 all: clean dbms vms
+
+.PHONY: run ## Runs all containers (VMS and DBMSs)
+run: run-dbms run-vms
 
 .PHONY: dbms ## Retrieves all remote dbms images
 dbms:
@@ -51,28 +52,28 @@ clean-vms:
 
 .PHONY: mysql ## Runs the MySQL relational database container
 mysql:
-	docker run --name $(igt_mysql) -e MYSQL_ROOT_PASSWORD=$(skelleton_key) -d -p $(mysql_ports) mysql
+	docker run --name $(vm_prefix)$(igt_mysql) -e MYSQL_ROOT_PASSWORD=$(skelleton_key) -d -p $(mysql_ports) mysql
 
 .PHONY: mongo ## Runs the MongoDB document store container
 mongo:
 	mkdir ~/data
-	docker run --name $(igt_mongo) -d -p $(mongo_ports) -v ~/data:/data/db mongo
+	docker run --name $(vm_prefix)$(igt_mongo) -d -p $(mongo_ports) -v ~/data:/data/db mongo
 
 .PHONY: cassandra ## Runs the Cassandra column store container
 cassandra:
-	docker run --name $(igt_cassandra) -d -p $(cassandra_ports) cassandra
+	docker run --name $(vm_prefix)$(igt_cassandra) -d -p $(cassandra_ports) cassandra
 
 .PHONY: redis ## Runs the Redis key-value store container
 redis:
-	docker run --name $(igt_redis) -d -p $(redis_ports) redis
+	docker run --name $(vm_prefix)$(igt_redis) -d -p $(redis_ports) redis
 
 .PHONY: neo ## Runs the neo4j graph store container
 neo:
-	docker run --name $(igt_neo) -d -p $(neo_ports) -v ~/neo4j/data:/data -v ~/neo4j/logs:/logs neo4j:3.0
+	docker run --name $(vm_prefix)$(igt_neo) -d -p $(neo_ports) -v ~/neo4j/data:/data -v ~/neo4j/logs:/logs neo4j:3.0
 
 .PHONY: vm ## Runs the Ubuntu virtual machine container
 vm:
-	docker run --name $(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) 1527079/igt-ubuntu-vm
+	docker run --name $(vm_prefix)$(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) 1527079/igt-ubuntu-vm
 #Removes all containers and resources associated with the IGT datastores
 
 .PHONY: clean ## Stops and removes all containers as well as resources [will ask for sudo]
