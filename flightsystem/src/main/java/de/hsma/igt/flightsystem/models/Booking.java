@@ -17,6 +17,10 @@ import org.hibernate.search.annotations.Indexed;
 @Table(name = "BOOKING")
 public class Booking extends BaseEntity {
 	
+	public Booking() {
+		super();
+	}
+
 	private static final long serialVersionUID = -6109445036290765621L;
 	
 	@ManyToOne()
