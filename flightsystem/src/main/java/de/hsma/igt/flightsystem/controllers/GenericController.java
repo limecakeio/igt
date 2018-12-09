@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
+import java.io.File;
 import java.io.IOException;
 
 import de.hsma.igt.flightsystem.models.BaseEntity;
@@ -35,11 +36,13 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 	TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 	// build the EntityManagerFactory as you would build in in Hibernate ORM
 	EntityManagerFactory emf = null;
+	private PersistenceUnit persistenceUnit;
 
 	@SuppressWarnings("unchecked")
 	public GenericController(PersistenceUnit persistenceUnit, Class<T> persistentClass) {
 		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
 		this.persistentClass = persistentClass;
+		this.persistenceUnit = persistenceUnit;
 	}
 
 	@Override
@@ -64,9 +67,12 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			logger.info(objects.size() + " " + this.persistentClass.getSimpleName() + " persisted in DB in " + queryTime
 					+ " ms.");
 			String writeToFile = new String(
-					Config.PERSISTENCE_UNIT_NAME + " CREATE: " + objects.size() + " " + queryTime + "\n");
-
-			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+					this.persistenceUnit.name() + " CREATE: " + objects.size() + " " + queryTime + "\n");
+			
+			File f = new File(Config.PERSIST_STORAGE_LOCATION);
+			f.getParentFile().mkdirs();
+			Files.createDirectories(Paths.get(Config.PERSIST_STORAGE_LOCATION).getParent());
+			Files.write(Paths.get(Config.PERSIST_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 			
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
@@ -107,8 +113,8 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 
 			long queryTime = queryEnd - queryStart;
 			logger.info("Updates of " + objects.size() + persistentClass.getSimpleName()+" successfully persisted in " + queryTime + " ms.");
-			String writeToFile = new String(Config.PERSISTENCE_UNIT_NAME + " UPDATE: " + objects.size() + " " + queryTime + "\n");
-            Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+			String writeToFile = new String(this.persistenceUnit.name() + " UPDATE: " + objects.size() + " " + queryTime + "\n");
+            Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
             
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
@@ -149,8 +155,8 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			tm.commit();
 			
 			logger.info(objects.size()+" " + persistentClass.getSimpleName()+" successfully deleted in " + queryTime + " ms.");
-			String writeToFile = new String(Config.PERSISTENCE_UNIT_NAME + " DELETE: " + objects.size() + " " + queryTime + "\n");
-            Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+			String writeToFile = new String(this.persistenceUnit.name() + " DELETE: " + objects.size() + " " + queryTime + "\n");
+            Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
@@ -197,8 +203,8 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 
 			logger.info("Found " + objectList.size() + " " +persistentClass.getSimpleName()+" in " + queryTime + " ms.");
 
-			String writeToFile = new String(Config.PERSISTENCE_UNIT_NAME + " READ  : " + objectList.size() + " " + queryTime + "\n");
-			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+			String writeToFile = new String(this.persistenceUnit.name() + " READ  : " + objectList.size() + " " + queryTime + "\n");
+			Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
