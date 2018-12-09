@@ -15,11 +15,13 @@ import org.junit.rules.TestName;
 import de.hsma.igt.flightsystem.controllers.*;
 import de.hsma.igt.flightsystem.controllers.IController;
 import de.hsma.igt.flightsystem.models.Airport;
+import de.hsma.igt.flightsystem.models.Booking;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSegment;
 import de.hsma.igt.flightsystem.models.TestsHelper;
 import de.hsma.igt.flightsystem.tools.AirportPopulator;
+import de.hsma.igt.flightsystem.tools.BookingPopulator;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
 import de.hsma.igt.flightsystem.tools.FlightSegmentPopulator;
@@ -95,6 +97,21 @@ public class TestProtocoll {
 	
 	@Test
 	public void simulateBookings() {
+		
+		final int nBooking = 5;
+
+		GenericController cc = new CustomerController(persistenceUnit);
+		GenericController fc = new FlightController(persistenceUnit);
+		GenericController bc = new BookingController(persistenceUnit);
+		
+		List<Customer> customers = cc.readObjects();
+		List<Flight> flights = fc.readObjects();
+		List<Booking> initBooking = bc.readObjects();
+		
+		List<Booking> bookings = new BookingPopulator().populateAsList(customers, flights, nBooking);
+		bc.createObjects(bookings);
+		
+		assertEquals(initBooking.size() + (customers.size() * nBooking), bc.readObjects().size());
 		
 	}
 	
