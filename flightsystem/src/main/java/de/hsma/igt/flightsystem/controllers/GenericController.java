@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
+import java.io.File;
 import java.io.IOException;
 
 import de.hsma.igt.flightsystem.models.BaseEntity;
@@ -65,8 +66,11 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 					+ " ms.");
 			String writeToFile = new String(
 					Config.PERSISTENCE_UNIT_NAME + " CREATE: " + objects.size() + " " + queryTime + "\n");
-
-			Files.write(Paths.get(Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+			
+			File f = new File(Config.PERSIST_STORAGE_LOCATION);
+			f.getParentFile().mkdirs();
+			Files.createDirectories(Paths.get(Config.PERSIST_STORAGE_LOCATION).getParent());
+			Files.write(Paths.get(Config.PERSIST_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 			
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
