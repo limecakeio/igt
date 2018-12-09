@@ -92,5 +92,15 @@ public class TestProtocoll {
 		assertEquals(fsc.readObjects().size(), flightSegments.size() + fsi);
 		
 	}
+	
+	@Test
+	public void simulateBookings() {
+		
+	}
+	
+	@Test
+	public void deleteAirport() {
+		
+	}
 
 }
