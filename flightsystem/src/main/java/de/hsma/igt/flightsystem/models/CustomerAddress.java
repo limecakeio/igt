@@ -88,4 +88,12 @@ public class CustomerAddress extends BaseEntity{
 	public void setStreetnumber(String streetnumber) {
 		this.streetnumber = streetnumber;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 }
