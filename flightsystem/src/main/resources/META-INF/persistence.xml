@@ -102,7 +102,7 @@
         <properties>
 
             <property name="hibernate.ogm.datastore.provider" value="cassandra_experimental"/>
-            <property name="hibernate.ogm.datastore.host" value="localhost:9042"/>
+            <property name="hibernate.ogm.datastore.host" value="127.0.0.1:7000"/>
             <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         </properties>
