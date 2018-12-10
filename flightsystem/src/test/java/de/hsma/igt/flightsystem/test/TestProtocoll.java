@@ -32,6 +32,8 @@ import de.hsma.igt.flightsystem.tools.Populator;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+import com.google.common.collect.Lists;
+
 
 
 //@RunWith(Parameterized.class)
@@ -65,8 +67,11 @@ public class TestProtocoll {
 //				};
 //		
 //		for(GenericController c : controllers) {
-//			c.deleteObjects(c.readObjects());
-//			assertEquals(0, c.readObjects().size());
+//			List l = c.readObjects();
+//			if (l.size() > 0) {
+//				c.deleteObjects(l);
+//				assertEquals(0, c.readObjects().size());
+//			}
 //		}
 		
 	}
@@ -84,7 +89,7 @@ public class TestProtocoll {
 
 
 	@Test
-	public void populateDatabase() {
+	public void test1_populateDatabase() {
 		
 		final int nRecords = 100;
 		
@@ -108,11 +113,10 @@ public class TestProtocoll {
 		assertEquals(cc.readObjects().size(), customers.size() + ci);
 		assertEquals(fc.readObjects().size(), flights.size() + fi);
 		assertEquals(fsc.readObjects().size(), flightSegments.size() + fsi);
-		
 	}
 	
 	@Test
-	public void simulateBookings() {
+	public void test2_simulateBookings() {
 		
 		final int nBooking = 5;
 		
@@ -124,64 +128,20 @@ public class TestProtocoll {
 		bc.createObjects(bookings);
 		
 		assertEquals(initBooking.size() + (customers.size() * nBooking), bc.readObjects().size());
-		
 	}
 	
-//	@Test
-//	public void deleteAirport() {
-//		
-//		List<Airport> airports = ac.readObjects();
-//		List<Flight> flights = fc.readObjects();
-//		List<Booking> bookings = bc.readObjects();
-//		List<FlightSegment> flightSegments = fsc.readObjects();
-//		List<Itinerary> itineraries = ic.readObjects();
-//		
-//		int deleteIndex = (int)(Math.random()*airports.size());
-//		Airport dAirport = airports.get(deleteIndex);
-//		
-//		List<Flight> dFlights = fc.readByAirport(dAirport);
-//		List<FlightSegment> dFlightSegemts = fsc.readByAirport(dAirport);
-//		List<Booking> dBookings = bc.readByAirport(dAirport);
-//		List<Itinerary> dIt = ic.readByAirport(dAirport);
-//		
-//		List dList = new ArrayList();
-//		dList.add(dAirport);
-//		ac.deleteObjects(dList);
-//		
-//		assertEquals(airports.size() - 1, ac.readObjects().size());
-//		assertEquals(flights.size() - dFlights.size(), fc.readObjects());
-//		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
-//		assertEquals(itineraries.size() - dIt.size(), ic.readObjects().size());
-//		
-//		
-//	}
-	
-//	@Test
-//	public void deleteFlight() {
-//		
-////		AirportController ac = new AirportController(persistenceUnit);
-////		FlightController fc = new FlightController(persistenceUnit);
-////		BookingController bc = new BookingController(persistenceUnit);
-////		FlightSegmentController fsc = new FlightSegmentController(persistenceUnit);
-////		ItineraryController ic = new ItineraryController(persistenceUnit);
-//		
-//		List<Airport> airports = ac.readObjects();
-//		List<Flight> flights = fc.readObjects();
-//		List<Booking> bookings = bc.readObjects();
-//		List<FlightSegment> flightSegments = fsc.readObjects();
-//		List<Itinerary> itineraries = ic.readObjects();
-//
-//		int deleteIndex = (int)(Math.random()*flights.size());
-//		Flight dFlight = flights.get(deleteIndex);
-//		
-//		List<Booking> dBookings = bc.readByFlight(dFlight);
-//		
-//		List dList = new ArrayList();
-//		dList.add(dFlight);
-//		fc.deleteObjects(dList);
-//		
-//		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
-//	}
-	
+	@Test
+	public void test3_deleteFlight() {
+		
+		List<Flight> flights = fc.readObjects();
+		List<Booking> bookings = bc.readObjects();
 
+		Flight dFlight = flights.get(0);
+		
+		List<Booking> dBookings = bc.readByFlight(dFlight);
+		
+		fc.deleteObjects(Lists.newArrayList(dFlight));
+		
+		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
+	}
 }

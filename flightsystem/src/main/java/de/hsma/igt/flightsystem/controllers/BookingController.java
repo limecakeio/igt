@@ -36,7 +36,7 @@ public class BookingController extends GenericController<Booking> {
 			EntityManager em = emf.createEntityManager();
 
 			String queryString = new String(
-					"SELECT x FROM " + Booking.class.getSimpleName() + " x WHERE x.flight =" + flight.getId() + ")");
+					"SELECT x FROM " + Booking.class.getSimpleName() + " x WHERE x.flight = " + flight.getId());
 
 			logger.info("Get " + Booking.class.getSimpleName() + " from and to " + flight.getId() + " TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
