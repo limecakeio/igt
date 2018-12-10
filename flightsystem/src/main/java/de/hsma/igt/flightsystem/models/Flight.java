@@ -2,6 +2,7 @@ package de.hsma.igt.flightsystem.models;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -22,6 +23,10 @@ public class Flight extends BaseEntity {
 	
 	@OneToMany(mappedBy = "flight")
 	private List<Itinerary> journey;
+	
+	@OneToMany(mappedBy = "flight",
+    		cascade = CascadeType.ALL)
+	private List<Booking> bookings;
 	
 	public Flight() {}
 
@@ -47,5 +52,13 @@ public class Flight extends BaseEntity {
 
 	public void setJourney(List<Itinerary> journey) {
 		this.journey = journey;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }

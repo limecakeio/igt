@@ -20,26 +20,28 @@ import javax.transaction.SystemException;
 import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSegment;
+import de.hsma.igt.flightsystem.models.Itinerary;
 import de.hsma.igt.flightsystem.tools.Config;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
-public class FlightSegmentController extends GenericController<FlightSegment> {
+public class ItineraryController extends GenericController<Itinerary> {
 
-	public FlightSegmentController(PersistenceUnit persistenceUnit) {
-		super(persistenceUnit, FlightSegment.class);
+	public ItineraryController(PersistenceUnit persistenceUnit) {
+		super(persistenceUnit, Itinerary.class);
+		
 	}
 
-	public List<FlightSegment> readByAirport(Airport airport) {
-		List<FlightSegment> objectList = new ArrayList<FlightSegment>();
+	public List<Itinerary> readByAirport(Airport airport) {
+		List<Itinerary> objectList = new ArrayList<Itinerary>();
 		try {
 			EntityManager em = emf.createEntityManager();
 
 			String queryString = new String(
-					"SELECT x FROM " + FlightSegment.class.getSimpleName() + " x WHERE x.arrivalAirport = "
-							+ airport.getId() + " OR x.departureAirport = " + airport.getId());
+					"SELECT x FROM " + Itinerary.class.getSimpleName() + " x WHERE x.flightSegment.arrivalAirport = "
+							+ airport.getId() + " OR x.flightSegment.departureAirport = " + airport.getId());
 
 			logger.info(
-					"Get " + FlightSegment.class.getSimpleName() + "from and to " + airport.getName() + " TA begins");
+					"Get " + Itinerary.class.getSimpleName() + "from and to " + airport.getName() + " TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
 			tm.begin();
 
@@ -55,11 +57,11 @@ public class FlightSegmentController extends GenericController<FlightSegment> {
 			em.close();
 			tm.commit();
 
-			logger.info("Get all " + FlightSegment.class.getSimpleName()+ " from and to "+airport.getName()+" TA ends");
+			logger.info("Get all " + Itinerary.class.getSimpleName()+ " from and to "+airport.getName()+" TA ends");
 
 			long queryTime = queryEnd - queryStart;
 
-			logger.info("Found " + objectList.size() + " " + FlightSegment.class.getSimpleName() + " in " + queryTime
+			logger.info("Found " + objectList.size() + " " + Itinerary.class.getSimpleName() + " in " + queryTime
 					+ " ms.");
 
 			String writeToFile = new String(
@@ -83,4 +85,5 @@ public class FlightSegmentController extends GenericController<FlightSegment> {
 
 		return objectList;
 	}
+
 }
