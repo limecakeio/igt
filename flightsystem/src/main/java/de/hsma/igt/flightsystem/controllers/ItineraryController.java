@@ -24,10 +24,10 @@ import de.hsma.igt.flightsystem.models.Itinerary;
 import de.hsma.igt.flightsystem.tools.Config;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
-public class ItineraryController extends GenericController<Flight> {
+public class ItineraryController extends GenericController<Itinerary> {
 
 	public ItineraryController(PersistenceUnit persistenceUnit) {
-		super(persistenceUnit, Flight.class);
+		super(persistenceUnit, Itinerary.class);
 		
 	}
 
