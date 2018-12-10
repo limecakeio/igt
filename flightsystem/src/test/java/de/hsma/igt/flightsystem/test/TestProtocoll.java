@@ -66,7 +66,7 @@ public class TestProtocoll {
 		
 		for(GenericController c : controllers) {
 			c.deleteObjects(c.readObjects());
-			assertEquals(0, c.readObjects());
+			assertEquals(0, c.readObjects().size());
 		}
 		
 	}
