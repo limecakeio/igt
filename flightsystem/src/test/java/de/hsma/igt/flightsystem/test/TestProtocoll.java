@@ -118,6 +118,41 @@ public class TestProtocoll {
 	@Test
 	public void deleteAirport() {
 		
+		GenericController ac = new AirportController(persistenceUnit);
+		GenericController fc = new FlightController(persistenceUnit);
+		GenericController bc = new BookingController(persistenceUnit);
+		GenericController fsc = new FlightSegmentController(persistenceUnit);
+		
+		List<Airport> airports = ac.readObjects();
+		List<Flight> flights = fc.readObjects();
+		List<Booking> bookings = bc.readObjects();
+		List<FlightSegment> flightSegments = fsc.readObjects();
+		
+		int deleteIndex = (int)(Math.random()*airports.size());
+		Airport dAirport = airports.get(deleteIndex);
+		
+		int nFlightSegment = 0;
+		List<FlightSegment> dFlightSegments = new ArrayList<FlightSegment>();
+		for (FlightSegment flightSegment : flightSegments) {
+			if (flightSegment.getArrivalAirport().equals(dAirport) || flightSegment.getDepartureAirport().equals(dAirport)) {
+				dFlightSegments.add(flightSegment);
+				nFlightSegment++;
+			}
+		}
+		
+		
+		int nFlight = 0;
+		List<Flight> dFlights = new ArrayList<Flight>();
+		for (Flight flight : flights) {
+			for (FlightSegment dFlightSegment : dFlightSegments)
+		}
+		int nBooking = 0;
+		int nFlightSegment = 0;
+		
+		
+		
+		
+		
 	}
 
 }
