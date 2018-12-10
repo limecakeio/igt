@@ -23,10 +23,12 @@ import de.hsma.igt.flightsystem.controllers.CustomerController;
 import de.hsma.igt.flightsystem.controllers.FlightController;
 import de.hsma.igt.flightsystem.controllers.FlightSegmentController;
 import de.hsma.igt.flightsystem.controllers.IController;
+import de.hsma.igt.flightsystem.controllers.ItineraryController;
 import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSegment;
+import de.hsma.igt.flightsystem.models.Itinerary;
 import de.hsma.igt.flightsystem.tools.AirportPopulator;
 import de.hsma.igt.flightsystem.tools.CustomerPopulator;
 import de.hsma.igt.flightsystem.tools.FlightPopulator;
@@ -82,20 +84,11 @@ public class DatabasePopulator {
     		customer.setEmail(customer.getEmail() + "_new");
     	}
     	
-    	
-    	cc.updateObjects(customerList);
-    	
-    	//check update airport
-    	System.out.println("Updating Airports");
-    	
-    	List<Airport> airportList = ac.readObjects();
-    	for(Airport airport : airportList) {
-    		if(airport.getIataCode().equals("SIN")){
-    			System.out.println("1x");
-    			airport.setLatitude(666666);
-    		}
+    	ItineraryController ic = new ItineraryController(persistenceUnit);
+    	for(Itinerary iti :ic.readByAirport(ac.readObjects().get(0))) {
+    		System.out.println(iti.getFlightSegment().getFlightName()+ " "+iti.getFlightSegment().getDepartureAirport().getName()+ " "+iti.getFlightSegment().getArrivalAirport().getName());
     	}
-    	ac.updateObjects(airportList);
+    	
     	
     }
 
