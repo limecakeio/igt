@@ -31,16 +31,23 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 
 	private Class<T> persistentClass;
 	protected static Logger logger = Logger.getRootLogger();
-	// accessing JBoss's Transaction can be done differently but this one works
-	// nicely
-	TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-	// build the EntityManagerFactory as you would build in in Hibernate ORM
-	EntityManagerFactory emf = null;
+	protected static TransactionManager tm = null;
+	protected static EntityManagerFactory emf = null;
 	protected PersistenceUnit persistenceUnit;
 
 	@SuppressWarnings("unchecked")
 	public GenericController(PersistenceUnit persistenceUnit, Class<T> persistentClass) {
-		emf = Persistence.createEntityManagerFactory(persistenceUnit.name());
+		if(emf == null) {
+			emf = Persistence.createEntityManagerFactory(persistenceUnit.name());	
+		}
+		
+		if(tm == null) {
+			tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+		}
+		
+		if(persistenceUnit == null) {
+			
+		}
 		this.persistentClass = persistentClass;
 		this.persistenceUnit = persistenceUnit;
 	}
