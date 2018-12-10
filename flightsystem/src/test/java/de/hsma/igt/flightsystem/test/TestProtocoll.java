@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
 import de.hsma.igt.flightsystem.controllers.*;
-import de.hsma.igt.flightsystem.controllers.IController;
 import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.Booking;
 import de.hsma.igt.flightsystem.models.Customer;
@@ -38,11 +38,28 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestProtocoll {
     @Rule public TestName name = new TestName();
-    private PersistenceUnit persistenceUnit = TestsHelper.resolvePersistenceUnit();
+    private static PersistenceUnit persistenceUnit = TestsHelper.resolvePersistenceUnit();
 	
 	long startTimestamp;
 	
 	private final String CMD_ARGUMENT = "db";
+	
+	@BeforeClass
+	public void setup() {
+		
+		GenericController[] controllers = {
+				new AirportController(persistenceUnit),
+				new BookingController(persistenceUnit),
+				new CustomerController(persistenceUnit),
+				new ItineraryController(persistenceUnit),
+				new FlightController(persistenceUnit),
+				new FlightSegmentController(persistenceUnit)
+				};
+		
+		for(GenericController c : controllers)
+			c.deleteObjects(c.readObjects());
+		
+	}
 
     @Before
     public void beforeEvery() {
