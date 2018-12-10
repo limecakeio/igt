@@ -76,7 +76,7 @@ public class CustomerPopulator implements Populator {
                     //Setup some phones
                     CustomerPhone cp1 = new CustomerPhone(myCustomer, C_PHONE_1, PhoneType.HOME_PHONE);
                     CustomerPhone cp2 = new CustomerPhone(myCustomer, C_PHONE_2, PhoneType.MOBILE_PHONE);
-                    Set<CustomerPhone> cPhones = new HashSet<>();
+                    List<CustomerPhone> cPhones = new ArrayList<>();
                     cPhones.add(cp1);
                     cPhones.add(cp2);
                     myCustomer.setContactNumbers(cPhones);

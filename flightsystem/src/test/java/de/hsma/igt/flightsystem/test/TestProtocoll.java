@@ -91,7 +91,7 @@ public class TestProtocoll {
 	@Test
 	public void test1_populateDatabase() {
 		
-		final int nRecords = 100;
+		final int nRecords = 50;
 		
 		
 		List<Airport> airports = new AirportPopulator().getAirports();
@@ -118,7 +118,7 @@ public class TestProtocoll {
 	@Test
 	public void test2_simulateBookings() {
 		
-		final int nBooking = 5;
+		final int nBooking = 3;
 		
 		List<Customer> customers = cc.readObjects();
 		List<Flight> flights = fc.readObjects();
@@ -138,7 +138,7 @@ public class TestProtocoll {
 
 		Flight dFlight = flights.get(0);
 		
-		List<Booking> dBookings = bc.readByFlight(dFlight);
+		List<Booking> dBookings = dFlight.getBookings();
 		
 		fc.deleteObjects(Lists.newArrayList(dFlight));
 		
