@@ -19,6 +19,7 @@ import javax.transaction.SystemException;
 
 import de.hsma.igt.flightsystem.models.Airport;
 import de.hsma.igt.flightsystem.models.Flight;
+import de.hsma.igt.flightsystem.models.Itinerary;
 import de.hsma.igt.flightsystem.tools.Config;
 import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 
@@ -33,7 +34,9 @@ public class FlightController extends GenericController<Flight>{
 		try {
 			EntityManager em = emf.createEntityManager();
 
-			String queryString = new String("SELECT x FROM " + Flight.class.getSimpleName() + " x");
+			String queryString = new String(
+					"SELECT distinct x.flight FROM " + Itinerary.class.getSimpleName() + " x WHERE x.flightSegment.arrivalAirport = "
+							+ airport.getId() + " OR x.flightSegment.departureAirport = " + airport.getId());
 
 			logger.info("Get "+Flight.class.getSimpleName()+"from and to "+airport.getName()+" TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
