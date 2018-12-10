@@ -26,7 +26,7 @@ public class Flight extends BaseEntity {
 	
 	@OneToMany(mappedBy = "flight",
     		cascade = CascadeType.ALL)
-	private Set<Booking> bookings;
+	private List<Booking> bookings;
 	
 	public Flight() {}
 
@@ -54,11 +54,11 @@ public class Flight extends BaseEntity {
 		this.journey = journey;
 	}
 
-	public Set<Booking> getBookings() {
+	public List<Booking> getBookings() {
 		return bookings;
 	}
 
-	public void setBookings(Set<Booking> bookings) {
+	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
 }

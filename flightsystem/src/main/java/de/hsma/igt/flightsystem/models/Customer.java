@@ -1,6 +1,7 @@
 package de.hsma.igt.flightsystem.models;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -36,11 +37,11 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer",
     		cascade = CascadeType.ALL,
     		orphanRemoval = true)
-	private Set<CustomerPhone> contactNumbers;
+	private List<CustomerPhone> contactNumbers;
     
     @OneToMany(mappedBy = "customer",
     		cascade = CascadeType.ALL)
-	private Set<Booking> bookings;
+	private List<Booking> bookings;
     
 	public Customer() {
 	}
@@ -57,7 +58,7 @@ public class Customer extends BaseEntity {
 		return address;
 	}
 
-	public Set<CustomerPhone> getContactNumbers() {
+	public List<CustomerPhone> getContactNumbers() {
 		return contactNumbers;
 	}
 
@@ -85,7 +86,7 @@ public class Customer extends BaseEntity {
 		this.address = address;
 	}
 
-	public void setContactNumbers(Set<CustomerPhone> contactNumbers) {
+	public void setContactNumbers(List<CustomerPhone> contactNumbers) {
 		this.contactNumbers = contactNumbers;
 	}
 
@@ -108,10 +109,10 @@ public class Customer extends BaseEntity {
 	public void setStatus(CustomerStatus status) {
 		this.status = status;
 	}
-	public Set<Booking> getBookings() {
+	public List<Booking> getBookings() {
 		return bookings;
 	}
-	public void setBookings(Set<Booking> bookings) {
+	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
 }
