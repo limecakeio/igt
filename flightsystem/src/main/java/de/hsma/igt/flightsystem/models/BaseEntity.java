@@ -27,5 +27,9 @@ public class BaseEntity implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public boolean equals(BaseEntity entity) {
+		return id == entity.getId();
+	}
 
 }
