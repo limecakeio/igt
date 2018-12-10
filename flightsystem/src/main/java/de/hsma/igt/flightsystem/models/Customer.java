@@ -38,6 +38,10 @@ public class Customer extends BaseEntity {
     		orphanRemoval = true)
 	private Set<CustomerPhone> contactNumbers;
     
+    @OneToMany(mappedBy = "customer",
+    		cascade = CascadeType.ALL)
+	private Set<Booking> bookings;
+    
 	public Customer() {
 	}
 	public Customer(String firstname, String lastname, String email, Date dateOfBirth) {
@@ -103,5 +107,11 @@ public class Customer extends BaseEntity {
 	
 	public void setStatus(CustomerStatus status) {
 		this.status = status;
+	}
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }
