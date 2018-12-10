@@ -34,10 +34,10 @@ public class BookingController extends GenericController<Booking> {
 		try {
 			EntityManager em = emf.createEntityManager();
 
-			String queryString = new String("SELECT x FROM " + Booking.class.getSimpleName() + " x WHERE x.flight in"
-					+ "SELECT distinct x.flight FROM " + Itinerary.class.getSimpleName()
+			String queryString = new String("SELECT x FROM " + Booking.class.getSimpleName() + " x WHERE x.flight in "
+					+ "(SELECT distinct x.flight FROM " + Itinerary.class.getSimpleName()
 					+ " x WHERE x.flightSegment.arrivalAirport = " + airport.getId()
-					+ " OR x.flightSegment.departureAirport = " + airport.getId());
+					+ " OR x.flightSegment.departureAirport = " + airport.getId()+")");
 
 			logger.info("Get " + Booking.class.getSimpleName() + "from and to " + airport.getName() + " TA begins");
 			tm.setTransactionTimeout(Config.TRANSACTION_TIMEOUT);
