@@ -17,13 +17,13 @@ git clone https://github.com/limecakeio/igt igt
 cd igt
 make
 ````
-This will obtain and launch the images for 6 containers:
+This will obtain the images for the following 6 containers:
 
 1. MySQL
 1. Redis
 1. Mongo DB
 1. neo4j
-1. couchDB
+1. Cassandra
 1. Ubuntu Virtual Machine
 
 ## Launch
@@ -31,7 +31,7 @@ The following explains how to launch each obtained image individually:
 
 * MySQL
   ```
-  make mysql # Launches MySQL container on port 3306
+  make mysql # Launches MySQL container on port 3312
   ```
 * Redis
   ```
@@ -51,8 +51,11 @@ The following explains how to launch each obtained image individually:
   make cassandra # Launches Cassandra Column-based Store container on port 9042
   ```
 * Ubuntu Virtual Machine
+    * It is recommended you use the VM on a clean DB stack so call the following:
   ```
-  make vm # Launches the ubuntu VM containing running instances all above mentioned DBMS containers on port 4000
+  make clean
+  make run-dbms
+  make run-vm # Launches the ubuntu VM which accesses the DBs on the host machine
   ```
  
 

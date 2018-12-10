@@ -9,9 +9,12 @@ RUN apt-get update && apt-get install -y \
     git \
     make \
     docker.io \
-    maven
+    maven; \
+    git clone ${github} ${repo}; \
+    chmod 777 ${repo}; \
+    cd ${repo}/flightsystem; \
+    mvn clean compile package -DskipTests;
 
-# Entry point is our own repo's setup file
-CMD git clone ${github} ${repo}; cd ${repo}; ./setup.sh
+WORKDIR /${repo}
 
 EXPOSE 80
