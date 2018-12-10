@@ -1,0 +1,47 @@
+version: '3'
+services:
+  vm:
+    build: .
+    networks:
+    - internal
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+      - cassandra
+      - neo
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    container_name: igt_vm
+  mysql:
+    image: mysql
+    networks:
+      - internal
+    ports:
+      - ${mysql_ports}
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${skelleton_key}
+  mongo:
+    networks:
+    - internal
+    image: mongo
+  redis:
+    networks:
+    - internal
+    image: redis
+  cassandra:
+    networks:
+    - internal
+    image: cassandra
+    ports:
+      - ${cassandra_ports}
+  neo:
+    networks:
+    - internal
+    image: neo4j:3.0
+    ports:
+      - ${neo_ports}
+networks:
+  internal:

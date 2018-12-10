@@ -20,6 +20,7 @@ hs_err_pid*
 
 # ---> Maven
 target/
+logs/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -33,3 +34,4 @@ buildNumber.properties
 */.settings
 /flightsystem/ObjectStore/*
 /flightsystem/bin/*
+/flightsystem/de.hsma.igt.flightsystem.models.*
