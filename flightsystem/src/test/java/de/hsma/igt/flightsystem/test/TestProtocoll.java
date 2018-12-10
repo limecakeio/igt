@@ -19,6 +19,7 @@ import de.hsma.igt.flightsystem.models.Booking;
 import de.hsma.igt.flightsystem.models.Customer;
 import de.hsma.igt.flightsystem.models.Flight;
 import de.hsma.igt.flightsystem.models.FlightSegment;
+import de.hsma.igt.flightsystem.models.Itinerary;
 import de.hsma.igt.flightsystem.models.TestsHelper;
 import de.hsma.igt.flightsystem.tools.AirportPopulator;
 import de.hsma.igt.flightsystem.tools.BookingPopulator;
@@ -118,39 +119,42 @@ public class TestProtocoll {
 	@Test
 	public void deleteAirport() {
 		
-		GenericController ac = new AirportController(persistenceUnit);
-		GenericController fc = new FlightController(persistenceUnit);
-		GenericController bc = new BookingController(persistenceUnit);
-		GenericController fsc = new FlightSegmentController(persistenceUnit);
+		AirportController ac = new AirportController(persistenceUnit);
+		FlightController fc = new FlightController(persistenceUnit);
+		BookingController bc = new BookingController(persistenceUnit);
+		FlightSegmentController fsc = new FlightSegmentController(persistenceUnit);
+		ItineraryController ic = new ItineraryController(persistenceUnit);
 		
 		List<Airport> airports = ac.readObjects();
 		List<Flight> flights = fc.readObjects();
 		List<Booking> bookings = bc.readObjects();
 		List<FlightSegment> flightSegments = fsc.readObjects();
+		List<Itinerary> Itineraries = ic.readObjects();
 		
-		int deleteIndex = (int)(Math.random()*airports.size());
-		Airport dAirport = airports.get(deleteIndex);
+//		int deleteIndex = (int)(Math.random()*airports.size());
+//		Airport dAirport = airports.get(deleteIndex);
+//		
+//		int nFlightSegment = 0;
+//		List<FlightSegment> dFlightSegments = new ArrayList<FlightSegment>();
+//		for (FlightSegment flightSegment : flightSegments) {
+//			if (flightSegment.getArrivalAirport().equals(dAirport) || flightSegment.getDepartureAirport().equals(dAirport)) {
+//				dFlightSegments.add(flightSegment);
+//				nFlightSegment++;
+//			}
+//		}
+//		
+//		
+//		int nFlight = 0;
+//		List<Flight> dFlights = new ArrayList<Flight>();
+//		for (Flight flight : flights) {
+//			for (FlightSegment dFlightSegment : dFlightSegments)
+//		}
+//		int nBooking = 0;
 		
-		int nFlightSegment = 0;
-		List<FlightSegment> dFlightSegments = new ArrayList<FlightSegment>();
-		for (FlightSegment flightSegment : flightSegments) {
-			if (flightSegment.getArrivalAirport().equals(dAirport) || flightSegment.getDepartureAirport().equals(dAirport)) {
-				dFlightSegments.add(flightSegment);
-				nFlightSegment++;
-			}
-		}
-		
-		
-		int nFlight = 0;
-		List<Flight> dFlights = new ArrayList<Flight>();
-		for (Flight flight : flights) {
-			for (FlightSegment dFlightSegment : dFlightSegments)
-		}
-		int nBooking = 0;
-		int nFlightSegment = 0;
-		
-		
-		
+		List<Flight> dFlights = fc.readByAirport(dAirport);
+		List<FlightSegment> dFlightSegemts = fsc.readByAirport(dAirport);
+		List<Booking> dBookings = bc.readByAirport(dAirport);
+		List<Itinerary> dIt = ic.readByAirport(dAirport);
 		
 		
 	}
