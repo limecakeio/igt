@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y \
     maven
 
 # Entry point is our own repo's setup file
-CMD git clone ${github} ${repo}; cd ${repo}; ./setup.sh
+CMD git clone ${github} ${repo};
+
+WORKDIR /${repo}
+
+CMD /bin/bash
 
 EXPOSE 80

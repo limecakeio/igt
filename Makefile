@@ -73,7 +73,7 @@ neo:
 
 .PHONY: vm ## Runs the Ubuntu virtual machine container
 vm:
-	docker run --name $(vm_prefix)$(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) 1527079/igt-ubuntu-vm
+	docker run --name $(igt_ubuntu_vm) -p $(ubuntu_vm_ports) -v $(docker_socket) -it 1527079/igt-ubuntu-vm
 #Removes all containers and resources associated with the IGT datastores
 
 .PHONY: clean ## Stops and removes all containers as well as resources [will ask for sudo]
