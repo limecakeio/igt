@@ -178,7 +178,7 @@ public class TestProtocoll {
 		dList.add(dFlight);
 		fc.deleteObjects(dList);
 		
-		System.out.println("Bookings: " + bookings.size() + " | " + bc.readObjects().size());
+		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
 	}
 	
 
