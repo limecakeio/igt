@@ -40,19 +40,19 @@ public class TestProtocoll {
     @Rule public TestName name = new TestName();
     private static PersistenceUnit persistenceUnit = TestsHelper.resolvePersistenceUnit();
     
-	private AirportController ac;
-	private BookingController bc; 
-	private CustomerController cc;
-	private ItineraryController ic;
-	private FlightController fc;
-	private FlightSegmentController fsc;
+	private static AirportController ac;
+	private static BookingController bc; 
+	private static CustomerController cc;
+	private static ItineraryController ic;
+	private static FlightController fc;
+	private static FlightSegmentController fsc;
 	
 	long startTimestamp;
 	
 	private final String CMD_ARGUMENT = "db";
 	
 	@BeforeClass
-	public void setup() {
+	public static void setup() {
 		ac = new AirportController(persistenceUnit);
 		bc = new BookingController(persistenceUnit);
 		cc = new CustomerController(persistenceUnit);
@@ -64,8 +64,10 @@ public class TestProtocoll {
 				bc, cc, fc, ic, fsc, ac
 				};
 		
-		for(GenericController c : controllers)
+		for(GenericController c : controllers) {
 			c.deleteObjects(c.readObjects());
+			assertEquals(0, c.readObjects());
+		}
 		
 	}
 
