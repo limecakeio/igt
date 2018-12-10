@@ -53,4 +53,12 @@ public class Flight extends BaseEntity {
 	public void setJourney(List<Itinerary> journey) {
 		this.journey = journey;
 	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
 }
