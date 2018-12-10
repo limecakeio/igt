@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     docker.io \
     maven; \
     git clone ${github} ${repo}; \
+    chmod 777 ${repo}; \
     cd ${repo}/flightsystem; \
     mvn clean compile package -DskipTests;
 

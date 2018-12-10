@@ -17,31 +17,30 @@ services:
     image: mysql
     networks:
       - internal
-    ports:
-      - ${mysql_ports}
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${skelleton_key}
   mongo:
-    networks:
-    - internal
     image: mongo
+    networks:
+    - internal
+    restart: always
   redis:
-    networks:
-    - internal
     image: redis
-  cassandra:
     networks:
     - internal
+    restart: always
+  cassandra:
     image: cassandra
-    ports:
-      - ${cassandra_ports}
+    restart: always
+    networks:
+    - internal
   neo:
+    restart: always
     networks:
     - internal
     image: neo4j:3.0
-    ports:
-      - ${neo_ports}
 networks:
   internal:
+    driver: bridge
