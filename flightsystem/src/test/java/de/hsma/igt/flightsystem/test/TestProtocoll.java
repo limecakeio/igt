@@ -129,32 +129,24 @@ public class TestProtocoll {
 		List<Flight> flights = fc.readObjects();
 		List<Booking> bookings = bc.readObjects();
 		List<FlightSegment> flightSegments = fsc.readObjects();
-		List<Itinerary> Itineraries = ic.readObjects();
+		List<Itinerary> itineraries = ic.readObjects();
 		
-//		int deleteIndex = (int)(Math.random()*airports.size());
-//		Airport dAirport = airports.get(deleteIndex);
-//		
-//		int nFlightSegment = 0;
-//		List<FlightSegment> dFlightSegments = new ArrayList<FlightSegment>();
-//		for (FlightSegment flightSegment : flightSegments) {
-//			if (flightSegment.getArrivalAirport().equals(dAirport) || flightSegment.getDepartureAirport().equals(dAirport)) {
-//				dFlightSegments.add(flightSegment);
-//				nFlightSegment++;
-//			}
-//		}
-//		
-//		
-//		int nFlight = 0;
-//		List<Flight> dFlights = new ArrayList<Flight>();
-//		for (Flight flight : flights) {
-//			for (FlightSegment dFlightSegment : dFlightSegments)
-//		}
-//		int nBooking = 0;
+		int deleteIndex = (int)(Math.random()*airports.size());
+		Airport dAirport = airports.get(deleteIndex);
 		
 		List<Flight> dFlights = fc.readByAirport(dAirport);
 		List<FlightSegment> dFlightSegemts = fsc.readByAirport(dAirport);
 		List<Booking> dBookings = bc.readByAirport(dAirport);
 		List<Itinerary> dIt = ic.readByAirport(dAirport);
+		
+		List dList = new ArrayList();
+		dList.add(dAirport);
+		ac.deleteObjects(dList);
+		
+		assertEquals(airports.size() - 1, ac.readObjects().size());
+		assertEquals(flights.size() - dFlights.size(), fc.readObjects());
+		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
+		assertEquals(itineraries.size() - dIt.size(), ic.readObjects().size());
 		
 		
 	}
