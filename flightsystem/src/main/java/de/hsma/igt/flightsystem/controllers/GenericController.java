@@ -30,13 +30,13 @@ import de.hsma.igt.flightsystem.tools.PersistenceUnit;
 public abstract class GenericController<T extends BaseEntity> implements IController<T> {
 
 	private Class<T> persistentClass;
-	private static Logger logger = Logger.getRootLogger();
+	protected static Logger logger = Logger.getRootLogger();
 	// accessing JBoss's Transaction can be done differently but this one works
 	// nicely
 	TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 	// build the EntityManagerFactory as you would build in in Hibernate ORM
 	EntityManagerFactory emf = null;
-	private PersistenceUnit persistenceUnit;
+	protected PersistenceUnit persistenceUnit;
 
 	@SuppressWarnings("unchecked")
 	public GenericController(PersistenceUnit persistenceUnit, Class<T> persistentClass) {
