@@ -88,60 +88,56 @@ public class TestProtocoll {
     }
 
 
-	@Test
-	public void test1_populateDatabase() {
-		
-		final int nRecords = 50;
-		
-		
-		List<Airport> airports = new AirportPopulator().getAirports();
-		List<Customer> customers = new CustomerPopulator().populateAsList(nRecords);
-		List<Flight> flights = new FlightPopulator().getFlights();
-		List<FlightSegment> flightSegments = new FlightSegmentPopulator(airports).getFlightSegments();
-
-		int ai = ac.readObjects().size();
-		int ci = cc.readObjects().size();
-		int fi = fc.readObjects().size();
-		int fsi = fsc.readObjects().size();
-		
-		ac.createObjects(airports);
-		cc.createObjects(customers);
-		fc.createObjects(flights);
-		fsc.createObjects(flightSegments);
-
-		assertEquals(ac.readObjects().size(), airports.size() + ai);
-		assertEquals(cc.readObjects().size(), customers.size() + ci);
-		assertEquals(fc.readObjects().size(), flights.size() + fi);
-		assertEquals(fsc.readObjects().size(), flightSegments.size() + fsi);
-	}
+//	@Test
+//	public void test1_populateDatabase() {
+//		
+//		final int nRecords = 10;
+//		
+//		
+//		List<Airport> airports = new AirportPopulator().getAirports();
+//		List<Customer> customers = new CustomerPopulator().populateAsList(nRecords);
+//		List<Flight> flights = new FlightPopulator().getFlights();
+//		List<FlightSegment> flightSegments = new FlightSegmentPopulator(airports).getFlightSegments();
+//
+//		int ai = ac.readObjects().size();
+//		int ci = cc.readObjects().size();
+//		int fi = fc.readObjects().size();
+//		int fsi = fsc.readObjects().size();
+//		
+//		ac.createObjects(airports);
+//		cc.createObjects(customers);
+//		fc.createObjects(flights);
+//		fsc.createObjects(flightSegments);
+//
+//		assertEquals(ac.readObjects().size(), airports.size() + ai);
+//		assertEquals(cc.readObjects().size(), customers.size() + ci);
+//		assertEquals(fc.readObjects().size(), flights.size() + fi);
+//		assertEquals(fsc.readObjects().size(), flightSegments.size() + fsi);
+//	}
+	
+//	@Test
+//	public void test2_simulateBookings() {
+//		
+//		final int nBooking = 2;
+//		
+//		List<Customer> customers = cc.readObjects();
+//		List<Flight> flights = fc.readObjects();
+//		List<Booking> initBooking = bc.readObjects();
+//		
+//		List<Booking> bookings = BookingPopulator.populateAsList(customers, flights, nBooking);
+//		bc.createObjects(bookings);
+//		
+//		assertEquals(initBooking.size() + (customers.size() * nBooking), bc.readObjects().size());
+//	}
 	
 	@Test
-	public void test2_simulateBookings() {
+	public void test3_deleteCustomer() {
 		
-		final int nBooking = 3;
-		
-		List<Customer> customers = cc.readObjects();
-		List<Flight> flights = fc.readObjects();
-		List<Booking> initBooking = bc.readObjects();
-		
-		List<Booking> bookings = BookingPopulator.populateAsList(customers, flights, nBooking);
-		bc.createObjects(bookings);
-		
-		assertEquals(initBooking.size() + (customers.size() * nBooking), bc.readObjects().size());
-	}
-	
-	@Test
-	public void test3_deleteFlight() {
-		
-		List<Flight> flights = fc.readObjects();
-		List<Booking> bookings = bc.readObjects();
+		List<Customer> customer = cc.readObjects();
 
-		Flight dFlight = flights.get(0);
+		cc.deleteObjects(customer);
 		
-		List<Booking> dBookings = dFlight.getBookings();
-		
-		fc.deleteObjects(Lists.newArrayList(dFlight));
-		
-		assertEquals(bookings.size() - dBookings.size(), bc.readObjects().size());
+		List<Customer> afterBookingList = cc.readObjects();
+		assertEquals(0, afterBookingList.size());
 	}
 }
