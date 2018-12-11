@@ -90,7 +90,7 @@ public class TestProtocoll {
     }
     
     @Test(expected=javax.transaction.NotSupportedException.class)
-    public void test4_nestedTranaction() throws NotSupportedException {
+    public void test5_nestedTranaction() throws NotSupportedException {
     	new NestedController(persistenceUnit).nestedTransaction(new CustomerPopulator().populateAsList(3));
     }
     
@@ -137,7 +137,7 @@ public class TestProtocoll {
 	}
 	
 	@Test
-	public void test3_deleteFlight() {
+	public void test4_deleteFlight() {
 		
 		int nBooking = 3;
 		
@@ -150,5 +150,29 @@ public class TestProtocoll {
 		fc.deleteObjects(Lists.newArrayList(dFlight));
 		List<Booking> afterBookingList = bc.readObjects();
 		assertEquals(bookings.size() - nBooking, afterBookingList.size());
+	}
+	
+	@Test
+	public void test3_updateCustomer() {
+		
+		List<Customer> customer = cc.readObjects();
+
+		 for (Customer c : customer) {
+			 c.getAddress().setPostcode("");
+			 c.getAddress().setState("");
+			 c.getAddress().setStreetname("");
+			 c.getAddress().setStreetnumber("");
+		 }
+		
+		
+		cc.updateObjects(customer);
+		List<Customer> homeless = cc.readObjects();
+
+		for (Customer c : homeless) {
+			 assertEquals("", c.getAddress().getPostcode());
+			 assertEquals("", c.getAddress().getState());
+			 assertEquals("", c.getAddress().getStreetname());
+			 assertEquals("", c.getAddress().getStreetnumber());
+		 }
 	}
 }

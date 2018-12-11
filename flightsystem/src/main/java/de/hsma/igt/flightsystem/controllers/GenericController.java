@@ -73,13 +73,20 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			long queryTime = queryEnd - queryStart;
 			logger.info(objects.size() + " " + this.persistentClass.getSimpleName() + " persisted in DB in " + queryTime
 					+ " ms.");
+//			String writeToFile = new String(
+//					this.persistenceUnit.name() + " CREATE: " + objects.size() + " " + queryTime + "\n");
+//			
+//			File f = new File(Config.PERSIST_STORAGE_LOCATION);
+//			f.getParentFile().mkdirs();
+//			Files.createDirectories(Paths.get(Config.PERSIST_STORAGE_LOCATION).getParent());
+//			Files.write(Paths.get(Config.PERSIST_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 			String writeToFile = new String(
-					this.persistenceUnit.name() + " CREATE: " + objects.size() + " " + queryTime + "\n");
+					this.persistenceUnit.name() + " CREATE " + this.persistentClass.getSimpleName() + ": " + objects.size() + " " + queryTime + "\n");
 			
 			File f = new File(Config.PERSIST_STORAGE_LOCATION);
 			f.getParentFile().mkdirs();
 			Files.createDirectories(Paths.get(Config.PERSIST_STORAGE_LOCATION).getParent());
-			Files.write(Paths.get(Config.PERSIST_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
+			Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 			
 		} catch (NotSupportedException e) {
 			e.printStackTrace();
@@ -120,7 +127,7 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 
 			long queryTime = queryEnd - queryStart;
 			logger.info("Updates of " + objects.size() + persistentClass.getSimpleName()+" successfully persisted in " + queryTime + " ms.");
-			String writeToFile = new String(this.persistenceUnit.name() + " UPDATE: " + objects.size() + " " + queryTime + "\n");
+			String writeToFile = new String(this.persistenceUnit.name() + " UPDATE " + this.persistentClass.getSimpleName() + ": " + objects.size() + " " + queryTime + "\n");
             Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
             
 		} catch (NotSupportedException e) {
@@ -162,7 +169,7 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			tm.commit();
 			
 			logger.info(objects.size()+" " + persistentClass.getSimpleName()+" successfully deleted in " + queryTime + " ms.");
-			String writeToFile = new String(this.persistenceUnit.name() + " DELETE: " + objects.size() + " " + queryTime + "\n");
+			String writeToFile = new String(this.persistenceUnit.name() + " DELETE " + this.persistentClass.getSimpleName() + ": " + objects.size() + " " + queryTime + "\n");
             Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 
 		} catch (NotSupportedException e) {
@@ -209,8 +216,9 @@ public abstract class GenericController<T extends BaseEntity> implements IContro
 			long queryTime = queryEnd - queryStart;
 
 			logger.info("Found " + objectList.size() + " " +persistentClass.getSimpleName()+" in " + queryTime + " ms.");
-
-			String writeToFile = new String(this.persistenceUnit.name() + " READ  : " + objectList.size() + " " + queryTime + "\n");
+			File f = new File(Config.PERSIST_STORAGE_LOCATION);
+			f.getParentFile().mkdirs();
+			String writeToFile = new String(this.persistenceUnit.name() + " READ "+ this.persistentClass.getSimpleName() + ": " + objectList.size() + " " + queryTime + "\n");
 			Files.write(Paths.get(Config.LOG + this.persistenceUnit.name() + Config.LOG_STORAGE_LOCATION), writeToFile.getBytes(), CREATE, APPEND);
 
 		} catch (NotSupportedException e) {
