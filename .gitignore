@@ -4,6 +4,7 @@
 
 # ---> Java
 *.class
+OGM*.txt
 **/dirtyTesting
 
 # Mobile Tools for Java (J2ME)
